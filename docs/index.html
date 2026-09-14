@@ -142,6 +142,25 @@
       justify-content: space-between;
     }
 
+    .download-dialog-preview {
+      display: block;
+      width: 100%;
+      max-height: 190px;
+      margin: 0 0 16px;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .download-dialog-preview[hidden],
+    .download-dialog-item-name[hidden] { display: none; }
+
+    .download-dialog-item-name {
+      color: var(--text) !important;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
     .download-dialog-action {
       position: relative;
       display: inline-grid;
@@ -203,6 +222,7 @@
       }
       .download-dialog-grid { grid-template-columns: 1fr; }
       .download-dialog-section { padding: 18px; }
+      .download-dialog-preview { max-height: 150px; }
     }
 
     @media (orientation: portrait) {
@@ -345,8 +365,10 @@
         </section>
         <section class="download-dialog-section download-dialog-download-block">
           <div>
-            <h3>Download</h3>
-            <p>Download the complete MiniWalls collection as a ZIP archive.</p>
+            <img class="download-dialog-preview" alt="" hidden>
+            <h3 class="download-dialog-download-heading">Download</h3>
+            <p class="download-dialog-item-name" hidden></p>
+            <p class="download-dialog-description">Download the complete MiniWalls collection as a ZIP archive.</p>
           </div>
           <a class="download-dialog-download download-dialog-action" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip"><span>Download</span></a>
         </section>
@@ -386,6 +408,7 @@
   </dialog>
 
   <script>
+    const collectionDownloadUrl = 'https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip';
     const gallery = document.querySelector('.gallery');
     const lightbox = document.querySelector('.lightbox');
     const lightboxImage = document.querySelector('.lightbox-image');
@@ -393,19 +416,30 @@
     const lightboxThumbnails = document.querySelector('.lightbox-thumbnails');
     const lightboxScrollThumb = document.querySelector('.lightbox-scroll-thumb');
     const lightboxDownload = document.querySelector('.lightbox-download');
+    const lightboxDownloadAll = document.querySelector('.lightbox-download-all');
     const creditText = document.querySelector('#credit-text');
     const creditCopyButton = document.querySelector('.credit-copy');
     const downloadDialog = document.querySelector('.download-dialog');
     const downloadDialogTrigger = document.querySelector('.download-collection-trigger');
     const downloadDialogClose = document.querySelector('.download-dialog-close');
+    const downloadDialogTitle = document.querySelector('#download-dialog-title');
     const downloadDialogCreditText = document.querySelector('#download-dialog-credit-text');
     const downloadDialogCopyButton = document.querySelector('.download-dialog-copy');
+    const downloadDialogPreview = document.querySelector('.download-dialog-preview');
+    const downloadDialogItemName = document.querySelector('.download-dialog-item-name');
+    const downloadDialogDescription = document.querySelector('.download-dialog-description');
+    const downloadDialogDownload = document.querySelector('.download-dialog-download');
+    const downloadDialogDownloadLabel = downloadDialogDownload.querySelector('span');
     const portraitLightbox = window.matchMedia('(orientation: portrait)');
     let activeWallpaper = 0;
 
     const escapeHtml = (value) => value.replace(/[&<>'\"]/g, (character) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[character]));
+
+    const syncBodyLock = () => {
+      document.body.classList.toggle('lightbox-open', lightbox.open || downloadDialog.open);
+    };
 
     const copyText = async (text) => {
       if (navigator.clipboard && window.isSecureContext) {
@@ -422,6 +456,36 @@
       textarea.select();
       document.execCommand('copy');
       textarea.remove();
+    };
+
+    const openDownloadDialog = (wallpaper = null) => {
+      if (wallpaper) {
+        const safePath = encodeURI(wallpaper.path);
+        downloadDialogTitle.textContent = 'Download wallpaper';
+        downloadDialogPreview.src = safePath;
+        downloadDialogPreview.alt = `${wallpaper.name} wallpaper preview`;
+        downloadDialogPreview.hidden = false;
+        downloadDialogItemName.textContent = wallpaper.name;
+        downloadDialogItemName.hidden = false;
+        downloadDialogDescription.textContent = `${wallpaper.type || 'Image'} · original file`;
+        downloadDialogDownload.href = safePath;
+        downloadDialogDownload.setAttribute('download', '');
+        downloadDialogDownloadLabel.textContent = 'Download image';
+      } else {
+        downloadDialogTitle.textContent = 'Download collection';
+        downloadDialogPreview.hidden = true;
+        downloadDialogPreview.removeAttribute('src');
+        downloadDialogPreview.alt = '';
+        downloadDialogItemName.hidden = true;
+        downloadDialogItemName.textContent = '';
+        downloadDialogDescription.textContent = 'Download the complete MiniWalls collection as a ZIP archive.';
+        downloadDialogDownload.href = collectionDownloadUrl;
+        downloadDialogDownload.removeAttribute('download');
+        downloadDialogDownloadLabel.textContent = 'Download';
+      }
+
+      downloadDialog.showModal();
+      syncBodyLock();
     };
 
     creditCopyButton.addEventListener('click', async () => {
@@ -449,15 +513,19 @@
 
     downloadDialogTrigger.addEventListener('click', (event) => {
       event.preventDefault();
-      downloadDialog.showModal();
-      document.body.classList.add('lightbox-open');
+      openDownloadDialog();
+    });
+
+    lightboxDownloadAll.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDownloadDialog();
     });
 
     downloadDialogClose.addEventListener('click', () => downloadDialog.close());
     downloadDialog.addEventListener('click', (event) => {
       if (event.target === downloadDialog) downloadDialog.close();
     });
-    downloadDialog.addEventListener('close', () => document.body.classList.remove('lightbox-open'));
+    downloadDialog.addEventListener('close', syncBodyLock);
 
     fetch('gallery.json')
       .then((response) => {
@@ -552,12 +620,11 @@
 
         const openLightbox = (index) => {
           lightbox.showModal();
-          document.body.classList.add('lightbox-open');
           showWallpaper(index);
+          syncBodyLock();
         };
 
-        gallery.innerHTML = wallpapers.map(({ name, path, type }) => {
-          const index = wallpapers.findIndex((wallpaper) => wallpaper.path === path);
+        gallery.innerHTML = wallpapers.map(({ name, path, type }, index) => {
           const safeName = escapeHtml(name);
           const safePath = encodeURI(path);
           return `
@@ -567,16 +634,28 @@
               </a>
               <div class="meta">
                 <h2>${safeName}</h2>
-                <a class="download" href="${safePath}" download>${type}</a>
+                <a class="download" href="${safePath}" download data-download-index="${index}">${type}</a>
               </div>
             </article>`;
         }).join('');
 
         gallery.addEventListener('click', (event) => {
+          const download = event.target.closest('.download[data-download-index]');
+          if (download) {
+            event.preventDefault();
+            openDownloadDialog(wallpapers[Number(download.dataset.downloadIndex)]);
+            return;
+          }
+
           const preview = event.target.closest('.preview');
           if (!preview) return;
           event.preventDefault();
           openLightbox(Number(preview.dataset.galleryIndex));
+        });
+
+        lightboxDownload.addEventListener('click', (event) => {
+          event.preventDefault();
+          openDownloadDialog(wallpapers[activeWallpaper]);
         });
 
         lightboxThumbnails.addEventListener('click', (event) => {
@@ -620,7 +699,7 @@
         }, { passive: false });
 
         document.addEventListener('keydown', (event) => {
-          if (!lightbox.open) return;
+          if (!lightbox.open || downloadDialog.open) return;
           const key = event.key.toLowerCase();
           if (key === 'a' || key === 'w') {
             event.preventDefault();
@@ -631,12 +710,13 @@
             showWallpaper(activeWallpaper + 1);
           }
         });
+
         lightbox.addEventListener('click', (event) => {
           if (event.target === lightbox) lightbox.close();
         });
         lightbox.addEventListener('close', () => {
           wheelAccumulator = 0;
-          document.body.classList.remove('lightbox-open');
+          syncBodyLock();
         });
       })
       .catch(() => {
