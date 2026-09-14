@@ -2,7 +2,7 @@
 
 Ultra-minimalist wallpapers designed for dark mode. Best used in slideshow mode. Inspired by the idea of keeping your desktop visually calm and distraction-free while working—without resorting to a plain solid-color background.
 
-Created by [@naetomgite](https://github.com/naetomgite).
+Created by [naetomgite](https://github.com/naetomgite).
 
 **Gallery:** https://naetomgite.github.io/Idea0123-MiniWalls/
 
@@ -24,9 +24,25 @@ You may:
 - share the original, unmodified files for non-commercial purposes;
 - redistribute one or several wallpapers together.
 
-When redistributing the artwork, please give appropriate attribution, for example:
+### Attribution
 
-> Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/
+When redistributing the artwork, please give appropriate attribution.
+
+Plain text:
+
+> Artwork by naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/
+
+Markdown:
+
+```md
+[Idea0123 by naetomgite](https://naetomgite.github.io/Idea0123-MiniWalls/)
+```
+
+Markdown with license:
+
+```md
+[Idea0123: MiniWalls © 2026 naetomgite · CC BY-NC-ND 4.0](https://naetomgite.github.io/Idea0123-MiniWalls/)
+```
 
 Commercial redistribution and distribution of modified versions are not
 permitted under this license.

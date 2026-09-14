@@ -2,7 +2,7 @@
 
 Unless otherwise stated, the original artwork in this repository is:
 
-**© 2026 @naetomgite**
+**© 2026 naetomgite**
 
 and is licensed under the:
 
@@ -21,9 +21,23 @@ Subject to the terms of CC BY-NC-ND 4.0, you may copy and redistribute the
 original, unmodified artwork for non-commercial purposes, provided that
 appropriate attribution is given.
 
-Recommended attribution:
+## Attribution
 
-> Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/
+Recommended plain-text attribution:
+
+> Artwork by naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/
+
+Markdown:
+
+```md
+[Idea0123 by naetomgite](https://naetomgite.github.io/Idea0123-MiniWalls/)
+```
+
+Markdown with license:
+
+```md
+[Idea0123: MiniWalls © 2026 naetomgite · CC BY-NC-ND 4.0](https://naetomgite.github.io/Idea0123-MiniWalls/)
+```
 
 The exact rights and obligations are governed by the CC BY-NC-ND 4.0 license,
 not by this summary.
