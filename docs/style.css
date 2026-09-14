@@ -140,6 +140,7 @@ h1 {
   background: var(--text);
   color: var(--ink);
   transform: translate(-4px, -4px);
+  transform-origin: center;
   transition: transform .12s ease;
 }
 
@@ -165,11 +166,7 @@ h1 span {
 }
 
 .button:active > span {
-  transform: translate(5px, 5px);
-}
-
-.button:active::after {
-  clip-path: polygon(0 0, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+  transform: translate(2px, 2px) scale(.96);
 }
 
 .gallery {
