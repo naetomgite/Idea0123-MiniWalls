@@ -390,16 +390,32 @@
           requestAnimationFrame(centerActiveThumbnail);
         });
 
-        let lastWheelNavigation = 0;
+        const wheelStep = 40;
+        let wheelAccumulator = 0;
         lightboxImage.addEventListener('wheel', (event) => {
           if (!lightbox.open || !event.deltaY) return;
           event.preventDefault();
 
-          const now = performance.now();
-          if (now - lastWheelNavigation < 120) return;
-          lastWheelNavigation = now;
-          showWallpaper(activeWallpaper + (event.deltaY > 0 ? 1 : -1));
+          const deltaScale = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+            ? 16
+            : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+              ? window.innerHeight
+              : 1;
+          const delta = event.deltaY * deltaScale;
+
+          if (wheelAccumulator && Math.sign(delta) !== Math.sign(wheelAccumulator)) {
+            wheelAccumulator = 0;
+          }
+          wheelAccumulator += delta;
+
+          const steps = Math.trunc(Math.abs(wheelAccumulator) / wheelStep);
+          if (!steps) return;
+
+          const direction = Math.sign(wheelAccumulator);
+          wheelAccumulator -= direction * steps * wheelStep;
+          showWallpaper(activeWallpaper + direction * steps);
         }, { passive: false });
+
         document.addEventListener('keydown', (event) => {
           if (!lightbox.open) return;
           const key = event.key.toLowerCase();
@@ -415,7 +431,10 @@
         lightbox.addEventListener('click', (event) => {
           if (event.target === lightbox) lightbox.close();
         });
-        lightbox.addEventListener('close', () => document.body.classList.remove('lightbox-open'));
+        lightbox.addEventListener('close', () => {
+          wheelAccumulator = 0;
+          document.body.classList.remove('lightbox-open');
+        });
       })
       .catch(() => {
         gallery.innerHTML = '<p class="gallery-status">Wallpapers are unavailable right now. Please try again soon.</p>';
