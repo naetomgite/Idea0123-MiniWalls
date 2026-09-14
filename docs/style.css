@@ -52,17 +52,31 @@ a { color: inherit; }
 
 .hero-copy .button {
   border-color: var(--text);
+  background: #000;
   color: var(--text);
+  box-shadow: 5px 5px 0 var(--text);
 }
 
 .hero-copy .button.primary {
   background: var(--text);
   color: var(--ink);
+  box-shadow: 5px 5px 0 #7a7a7a;
 }
 
 .hero-copy .button:hover {
+  background: #000;
+  color: var(--text);
+  box-shadow: 7px 7px 0 var(--text);
+}
+
+.hero-copy .button.primary:hover {
   background: var(--text);
   color: var(--ink);
+  box-shadow: 7px 7px 0 #7a7a7a;
+}
+
+.hero-copy .button:active {
+  box-shadow: 0 0 0 transparent;
 }
 
 .hero-footer {
@@ -102,6 +116,7 @@ h1 {
 }
 
 .button {
+  position: relative;
   display: inline-block;
   border: 3px solid var(--ink);
   border-radius: 0;
@@ -111,6 +126,8 @@ h1 {
   font-weight: 800;
   letter-spacing: .04em;
   text-transform: uppercase;
+  transform: translate(-4px, -4px);
+  transition: transform .12s ease, box-shadow .12s ease;
 }
 
 h1 span {
@@ -134,6 +151,11 @@ h1 span {
 .button:hover {
   background: var(--text);
   color: var(--ink);
+  transform: translate(-6px, -6px);
+}
+
+.button:active {
+  transform: translate(0, 0);
 }
 
 .gallery {
@@ -404,6 +426,10 @@ h1 span {
 .lightbox-caption { padding-top: 12px; }
 
 .lightbox-open { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: none; }
+}
 
 @media (max-width: 600px) {
   .wrap { width: min(100% - 24px, 1100px); }
