@@ -46,7 +46,7 @@ a { color: inherit; }
   min-height: 520px;
   margin-inline: 0;
   padding: clamp(40px, 7vw, 100px);
-  background: var(--ink);
+  background: #000;
   color: var(--text);
 }
 
