@@ -166,7 +166,7 @@ h1 span {
 }
 
 .button:active > span {
-  transform: translate(2px, 2px) scale(.96);
+  transform: translate(5px, 5px);
 }
 
 .gallery {
