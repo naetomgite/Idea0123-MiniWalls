@@ -127,7 +127,7 @@ h1 {
   background: var(--ink);
   clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
   content: "";
-  transition: inset .12s ease, clip-path .12s ease;
+  transition: inset .12s ease;
 }
 
 .button > span {
@@ -172,7 +172,6 @@ h1 span {
 /* A pressed button settles onto the page: its beveled base contracts away. */
 .button:active::after {
   inset: 0;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .gallery {
