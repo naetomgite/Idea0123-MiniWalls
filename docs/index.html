@@ -390,7 +390,7 @@
           requestAnimationFrame(centerActiveThumbnail);
         });
 
-        const wheelStep = 40;
+        const wheelStep = 120;
         let wheelAccumulator = 0;
         lightboxImage.addEventListener('wheel', (event) => {
           if (!lightbox.open || !event.deltaY) return;
@@ -408,12 +408,12 @@
           }
           wheelAccumulator += delta;
 
-          const steps = Math.trunc(Math.abs(wheelAccumulator) / wheelStep);
-          if (!steps) return;
+          if (Math.abs(wheelAccumulator) < wheelStep) return;
 
           const direction = Math.sign(wheelAccumulator);
-          wheelAccumulator -= direction * steps * wheelStep;
-          showWallpaper(activeWallpaper + direction * steps);
+          wheelAccumulator -= direction * wheelStep;
+          wheelAccumulator = Math.max(-wheelStep, Math.min(wheelStep, wheelAccumulator));
+          showWallpaper(activeWallpaper + direction);
         }, { passive: false });
 
         document.addEventListener('keydown', (event) => {
