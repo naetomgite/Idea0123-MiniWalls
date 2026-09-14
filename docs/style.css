@@ -411,6 +411,16 @@ h1 span {
   h1 { font-size: clamp(2rem, 10vw, 3.5rem); }
   .hero-grid { min-height: 0; }
   .hero-copy { padding: 48px 28px; }
+  .hero-copy .eyebrow,
+  .hero-copy h1 { text-align: center; }
+  .hero-copy .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-copy .button {
+    width: 100%;
+    text-align: center;
+  }
   .gallery { grid-template-columns: 1fr; }
   .lightbox { padding: 12px; }
   .lightbox-panel { grid-template-columns: 114px minmax(0, 1fr); gap: 12px; padding: 12px; }
