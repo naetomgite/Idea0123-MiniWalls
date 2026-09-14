@@ -44,9 +44,24 @@ a { color: inherit; }
 .hero-copy {
   width: min(820px, 100%);
   min-height: 520px;
-  margin-inline: auto;
+  margin-inline: 0;
   padding: clamp(40px, 7vw, 100px);
-  background: var(--cyan);
+  background: var(--ink);
+  color: var(--text);
+}
+
+.hero-copy .button {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.hero-copy .button.primary {
+  background: var(--text);
+  color: var(--ink);
+}
+
+.hero-copy .button:hover {
+  background: var(--text);
   color: var(--ink);
 }
 
