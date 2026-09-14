@@ -72,7 +72,12 @@
     <div class="lightbox-panel">
       <aside class="lightbox-rail" aria-label="Wallpaper carousel">
         <p>Wallpapers</p>
-        <div class="lightbox-thumbnails"></div>
+        <div class="lightbox-carousel">
+          <div class="lightbox-thumbnails"></div>
+          <div class="lightbox-scroll-track" aria-hidden="true">
+            <div class="lightbox-scroll-thumb"></div>
+          </div>
+        </div>
       </aside>
       <section class="lightbox-stage">
         <div class="lightbox-toolbar">
@@ -81,9 +86,14 @@
         </div>
         <img class="lightbox-image" alt="">
         <div class="lightbox-caption">
-          <button class="lightbox-previous" type="button" aria-label="Previous wallpaper">← Previous</button>
-          <a class="lightbox-download" download>Download PNG</a>
-          <button class="lightbox-next" type="button" aria-label="Next wallpaper">Next →</button>
+          <div class="lightbox-navigation">
+            <button class="lightbox-previous" type="button" aria-label="Previous wallpaper">← Previous (A/W)</button>
+            <button class="lightbox-next" type="button" aria-label="Next wallpaper">(S/D) Next →</button>
+          </div>
+          <div class="lightbox-downloads">
+            <a class="lightbox-download" download>Download image</a>
+            <a class="lightbox-download-all" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip">Download all</a>
+          </div>
         </div>
       </section>
     </div>
@@ -95,6 +105,7 @@
     const lightboxImage = document.querySelector('.lightbox-image');
     const lightboxTitle = document.querySelector('#lightbox-title');
     const lightboxThumbnails = document.querySelector('.lightbox-thumbnails');
+    const lightboxScrollThumb = document.querySelector('.lightbox-scroll-thumb');
     const lightboxDownload = document.querySelector('.lightbox-download');
     let activeWallpaper = 0;
 
@@ -108,6 +119,32 @@
         return response.json();
       })
       .then((wallpapers) => {
+        const updateScrollIndicator = () => {
+          const { clientHeight, scrollHeight, scrollTop } = lightboxThumbnails;
+          if (!clientHeight || scrollHeight <= clientHeight) {
+            lightboxScrollThumb.style.height = '100%';
+            lightboxScrollThumb.style.transform = 'translateY(0)';
+            return;
+          }
+          const thumbHeight = Math.max(28, (clientHeight / scrollHeight) * clientHeight);
+          const availableTrack = clientHeight - thumbHeight;
+          const availableScroll = scrollHeight - clientHeight;
+          const top = (scrollTop / availableScroll) * availableTrack;
+          lightboxScrollThumb.style.height = `${thumbHeight}px`;
+          lightboxScrollThumb.style.transform = `translateY(${top}px)`;
+        };
+
+        const centerActiveThumbnail = () => {
+          const activeThumbnail = lightboxThumbnails.querySelector('.is-active');
+          if (!activeThumbnail) return;
+          lightboxThumbnails.style.paddingBlock = '0px';
+          const emptySpace = Math.max(0, (lightboxThumbnails.clientHeight - activeThumbnail.clientHeight) / 2);
+          lightboxThumbnails.style.paddingBlock = `${emptySpace}px`;
+          const target = activeThumbnail.offsetTop - emptySpace;
+          lightboxThumbnails.scrollTo({ top: target, behavior: 'smooth' });
+          updateScrollIndicator();
+        };
+
         const showWallpaper = (index) => {
           activeWallpaper = (index + wallpapers.length) % wallpapers.length;
           const wallpaper = wallpapers[activeWallpaper];
@@ -121,12 +158,16 @@
                     type="button" data-lightbox-index="${thumbnailIndex}" aria-label="Show ${escapeHtml(name)}">
               <img src="${encodeURI(path)}" alt="" loading="lazy">
             </button>`).join('');
+          requestAnimationFrame(centerActiveThumbnail);
+          lightboxThumbnails.querySelectorAll('img').forEach((image) => {
+            image.addEventListener('load', centerActiveThumbnail, { once: true });
+          });
         };
 
         const openLightbox = (index) => {
-          showWallpaper(index);
           lightbox.showModal();
           document.body.classList.add('lightbox-open');
+          showWallpaper(index);
         };
 
         gallery.innerHTML = wallpapers.map(({ name, path, type }) => {
@@ -160,6 +201,19 @@
         document.querySelector('.lightbox-close').addEventListener('click', () => lightbox.close());
         document.querySelector('.lightbox-previous').addEventListener('click', () => showWallpaper(activeWallpaper - 1));
         document.querySelector('.lightbox-next').addEventListener('click', () => showWallpaper(activeWallpaper + 1));
+        lightboxThumbnails.addEventListener('scroll', updateScrollIndicator);
+        document.addEventListener('keydown', (event) => {
+          if (!lightbox.open) return;
+          const key = event.key.toLowerCase();
+          if (key === 'a' || key === 'w') {
+            event.preventDefault();
+            showWallpaper(activeWallpaper - 1);
+          }
+          if (key === 's' || key === 'd') {
+            event.preventDefault();
+            showWallpaper(activeWallpaper + 1);
+          }
+        });
         lightbox.addEventListener('click', (event) => {
           if (event.target === lightbox) lightbox.close();
         });

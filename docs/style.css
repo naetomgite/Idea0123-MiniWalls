@@ -211,6 +211,8 @@ h1 {
 }
 
 .lightbox {
+  position: fixed;
+  inset: 0;
   width: 100vw;
   max-width: none;
   height: 100dvh;
@@ -262,9 +264,36 @@ h1 {
 .lightbox-thumbnails {
   display: grid;
   gap: 10px;
+  height: 100%;
   overflow-y: auto;
+  margin: 0;
+  scrollbar-width: none;
+}
+
+.lightbox-thumbnails::-webkit-scrollbar { display: none; }
+
+.lightbox-carousel {
+  position: relative;
+  min-height: 0;
+  flex: 1;
   margin-top: 14px;
-  padding-right: 6px;
+  padding-right: 14px;
+}
+
+.lightbox-scroll-track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 4px;
+  background: rgb(244 244 244 / .2);
+}
+
+.lightbox-scroll-thumb {
+  width: 100%;
+  min-height: 28px;
+  background: var(--text);
+  transition: transform .16s ease, height .16s ease;
 }
 
 .lightbox-thumbnail {
@@ -297,11 +326,19 @@ h1 {
   gap: 16px;
 }
 
+.lightbox-navigation,
+.lightbox-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .lightbox-toolbar { padding-bottom: 12px; }
 
 .lightbox-close,
 .lightbox-caption button,
-.lightbox-download {
+.lightbox-download,
+.lightbox-download-all {
   border: 2px solid var(--text);
   border-radius: 0;
   padding: 9px 12px;
@@ -318,7 +355,8 @@ h1 {
 
 .lightbox-close:hover,
 .lightbox-caption button:hover,
-.lightbox-download:hover {
+.lightbox-download:hover,
+.lightbox-download-all:hover {
   background: var(--text);
   color: #000;
 }
