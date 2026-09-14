@@ -5,22 +5,303 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Ultra-minimalist wallpapers designed for dark mode. Best used in slideshow mode. Inspired by the idea of keeping your desktop visually calm and distraction-free while working—without resorting to a plain solid-color background.">
   <title>Idea0123: MiniWalls</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="credit-options.css">
+  <style>
+    .credit-stack {
+      width: min(100%, 760px);
+      margin-top: 24px;
+    }
+
+    .info .credit-label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .info .credit {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 14px 16px;
+      border: 2px solid var(--line);
+      background: var(--ink);
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .credit-copy {
+      width: 100%;
+      margin: 0;
+      padding: 10px 16px;
+      border: 2px solid var(--line);
+      border-top: 0;
+      border-radius: 0;
+      background: var(--text);
+      color: var(--ink);
+      font: inherit;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .credit-copy:hover { background: #d8d8d8; }
+    .credit-copy:active { background: #b8b8b8; }
+    .credit-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+    .download-dialog {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      max-width: none;
+      height: 100dvh;
+      max-height: none;
+      margin: 0;
+      padding: 40px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .download-dialog[open] { display: block; }
+    .download-dialog::backdrop { background: rgb(0 0 0 / .66); }
+
+    .download-dialog-panel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(820px, calc(100% - 80px));
+      padding: 20px;
+      border: 1px solid rgb(244 244 244 / .55);
+      background: rgb(37 37 37 / .88);
+      backdrop-filter: blur(12px);
+      transform: translate(-50%, -50%);
+    }
+
+    .download-dialog-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 16px;
+    }
+
+    .download-dialog-title,
+    .download-dialog-section h3 {
+      margin: 0;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .download-dialog-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(220px, .65fr);
+      gap: 12px;
+    }
+
+    .download-dialog-section {
+      min-width: 0;
+      padding: 22px;
+      border: 2px solid var(--line);
+      background: #111;
+    }
+
+    .download-dialog-section p {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .download-dialog-credit {
+      padding: 12px 14px;
+      border: 1px solid rgb(244 244 244 / .45);
+      color: var(--text) !important;
+      overflow-wrap: anywhere;
+    }
+
+    .download-dialog-copy {
+      width: 100%;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .download-dialog-license a { color: var(--text); }
+
+    .download-dialog-download-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .download-dialog-preview {
+      display: block;
+      width: 100%;
+      max-height: 190px;
+      margin: 0 0 16px;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .download-dialog-preview[hidden],
+    .download-dialog-item-name[hidden] { display: none; }
+
+    .download-dialog-item-name {
+      color: var(--text) !important;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .download-dialog-action {
+      position: relative;
+      display: inline-grid;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .download-dialog-action::after {
+      grid-area: 1 / 1;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      background: #8a8a8a;
+      content: "";
+      transform: translate(4px, 4px);
+    }
+
+    .download-dialog-action > span {
+      position: relative;
+      z-index: 1;
+      grid-area: 1 / 1;
+      display: block;
+      border: 2px solid var(--text);
+      padding: 9px 12px;
+      background: #000;
+      color: var(--text);
+      transform: translate(0, 0);
+      transition: transform .12s ease;
+    }
+
+    .download-dialog-action:hover > span { transform: translate(-2px, -2px); }
+    .download-dialog-action:active > span { transform: translate(4px, 4px); }
+
+    .download-dialog-download {
+      width: 100%;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .download-dialog-download > span {
+      background: var(--text);
+      color: var(--ink);
+    }
+
+    @media (max-width: 700px) {
+      .download-dialog { padding: 12px; }
+      .download-dialog-panel {
+        width: calc(100% - 24px);
+        padding: 12px;
+      }
+      .download-dialog-grid { grid-template-columns: 1fr; }
+      .download-dialog-section { padding: 18px; }
+      .download-dialog-preview { max-height: 150px; }
+    }
+
+    @media (orientation: portrait) {
+      .lightbox-panel {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto;
+        width: min(900px, 100%);
+        height: min(1100px, 100%);
+        gap: 16px;
+      }
+
+      .lightbox-stage {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .lightbox-rail {
+        grid-column: 1;
+        grid-row: 2;
+        min-width: 0;
+        min-height: auto;
+        padding-right: 0;
+      }
+
+      .lightbox-carousel {
+        min-width: 0;
+        min-height: 0;
+        height: clamp(88px, 18vw, 126px);
+        flex: none;
+        margin-top: 10px;
+        padding-right: 0;
+        padding-bottom: 10px;
+      }
+
+      .lightbox-thumbnails {
+        grid-auto-flow: column;
+        grid-auto-columns: clamp(120px, 26vw, 190px);
+        align-items: start;
+        width: 100%;
+        height: auto;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .lightbox-scroll-track {
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        height: 4px;
+      }
+
+      .lightbox-scroll-thumb {
+        width: 28px;
+        min-width: 28px;
+        height: 100%;
+        min-height: 0;
+        transition: transform .16s ease, width .16s ease;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="hero">
     <div class="wrap hero-grid" id="top">
       <div class="hero-copy">
-        <p class="eyebrow">Idea0123 / Wallpaper archive</p>
-        <h1>Mini<br>Walls</h1>
+        <p class="eyebrow">Wallpaper archive</p>
+        <h1><span class="idea-title">Idea 0123</span><span>Mini Walls</span></h1>
         <p class="intro">
           Ultra-minimalist wallpapers designed for dark mode. A focused collection
           for a calm, distraction-free desktop.
         </p>
         <div class="actions">
-          <a class="button primary" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip">Download collection</a>
-          <a class="button" href="#gallery">Browse collection</a>
-          <a class="button" href="#license">View license</a>
+          <a class="button primary download-collection-trigger" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip"><span>Download collection</span></a>
+          <a class="button" href="#gallery"><span>Browse collection</span></a>
+          <a class="button" href="#license"><span>View license</span></a>
+          <a class="button" href="https://github.com/naetomgite"><span>GitHub</span></a>
         </div>
       </div>
     </div>
@@ -44,10 +325,11 @@
         You may share the original, unmodified wallpapers for non-commercial
         purposes with appropriate attribution.
       </p>
-      <p class="credit">
-        Suggested credit:
-        <strong>Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</strong>
-      </p>
+      <div class="credit-stack">
+        <p class="credit-label">Suggested credit</p>
+        <p class="credit" id="credit-text">Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
+        <button class="credit-copy" type="button" aria-describedby="credit-text">Copy</button>
+      </div>
     </section>
 
     <section class="info">
@@ -68,12 +350,184 @@
     <a href="https://github.com/naetomgite/Idea0123-MiniWalls">GitHub</a>
   </footer>
 
-  <script>
-    const gallery = document.querySelector('.gallery');
+  <dialog class="download-dialog" aria-labelledby="download-dialog-title">
+    <div class="download-dialog-panel">
+      <div class="download-dialog-toolbar">
+        <p class="download-dialog-title" id="download-dialog-title">Download collection</p>
+        <button class="download-dialog-close download-dialog-action" type="button" aria-label="Close download dialog"><span>Close ×</span></button>
+      </div>
+      <div class="download-dialog-grid">
+        <section class="download-dialog-section">
+          <h3>Please credit the artist</h3>
+          <p>If you redistribute these wallpapers, please include attribution to @naetomgite and keep the original files unmodified.</p>
+          <p class="download-dialog-credit" id="download-dialog-credit-text">Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
+          <button class="download-dialog-copy download-dialog-action" type="button" aria-describedby="download-dialog-credit-text"><span>Copy</span></button>
+          <a class="download-dialog-more-credit download-dialog-action" href="#credit-options"><span>More ways to credit</span></a>
+          <p class="download-dialog-license">License reminder: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>. Non-commercial sharing of the original, unmodified artwork is allowed with attribution. Modified or commercial redistribution is not permitted.</p>
+        </section>
+        <section class="download-dialog-section download-dialog-download-block">
+          <div>
+            <img class="download-dialog-preview" alt="" hidden>
+            <h3 class="download-dialog-download-heading">Download</h3>
+            <p class="download-dialog-item-name" hidden></p>
+            <p class="download-dialog-description">Download the complete MiniWalls collection as a ZIP archive.</p>
+          </div>
+          <a class="download-dialog-download download-dialog-action" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip"><span>Download</span></a>
+        </section>
+      </div>
+    </div>
+  </dialog>
 
-    const escapeHtml = (value) => value.replace(/[&<>'"]/g, (character) => ({
+  <dialog class="lightbox" aria-labelledby="lightbox-title">
+    <div class="lightbox-panel">
+      <aside class="lightbox-rail" aria-label="Wallpaper carousel">
+        <p>Wallpapers</p>
+        <div class="lightbox-carousel">
+          <div class="lightbox-thumbnails"></div>
+          <div class="lightbox-scroll-track" aria-hidden="true">
+            <div class="lightbox-scroll-thumb"></div>
+          </div>
+        </div>
+      </aside>
+      <section class="lightbox-stage">
+        <div class="lightbox-toolbar">
+          <p id="lightbox-title"></p>
+          <button class="lightbox-close lightbox-action" type="button" aria-label="Close preview"><span>Close ×</span></button>
+        </div>
+        <img class="lightbox-image" alt="">
+        <div class="lightbox-caption">
+          <div class="lightbox-navigation">
+            <button class="lightbox-previous lightbox-action" type="button" aria-label="Previous wallpaper"><span>← Previous (A/W)</span></button>
+            <button class="lightbox-next lightbox-action" type="button" aria-label="Next wallpaper"><span>(S/D) Next →</span></button>
+          </div>
+          <div class="lightbox-downloads">
+            <a class="lightbox-download lightbox-action" download><span>Download image</span></a>
+            <a class="lightbox-download-all lightbox-action" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip"><span>Download all</span></a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <script>
+    const collectionDownloadUrl = 'https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip';
+    const gallery = document.querySelector('.gallery');
+    const lightbox = document.querySelector('.lightbox');
+    const lightboxImage = document.querySelector('.lightbox-image');
+    const lightboxTitle = document.querySelector('#lightbox-title');
+    const lightboxThumbnails = document.querySelector('.lightbox-thumbnails');
+    const lightboxScrollThumb = document.querySelector('.lightbox-scroll-thumb');
+    const lightboxDownload = document.querySelector('.lightbox-download');
+    const lightboxDownloadAll = document.querySelector('.lightbox-download-all');
+    const creditText = document.querySelector('#credit-text');
+    const creditCopyButton = document.querySelector('.credit-copy');
+    const downloadDialog = document.querySelector('.download-dialog');
+    const downloadDialogTrigger = document.querySelector('.download-collection-trigger');
+    const downloadDialogClose = document.querySelector('.download-dialog-close');
+    const downloadDialogTitle = document.querySelector('#download-dialog-title');
+    const downloadDialogCreditText = document.querySelector('#download-dialog-credit-text');
+    const downloadDialogCopyButton = document.querySelector('.download-dialog-copy');
+    const downloadDialogPreview = document.querySelector('.download-dialog-preview');
+    const downloadDialogItemName = document.querySelector('.download-dialog-item-name');
+    const downloadDialogDescription = document.querySelector('.download-dialog-description');
+    const downloadDialogDownload = document.querySelector('.download-dialog-download');
+    const downloadDialogDownloadLabel = downloadDialogDownload.querySelector('span');
+    const portraitLightbox = window.matchMedia('(orientation: portrait)');
+    let activeWallpaper = 0;
+
+    const escapeHtml = (value) => value.replace(/[&<>'\"]/g, (character) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[character]));
+
+    const syncBodyLock = () => {
+      document.body.classList.toggle('lightbox-open', lightbox.open || downloadDialog.open);
+    };
+
+    const copyText = async (text) => {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    };
+
+    const openDownloadDialog = (wallpaper = null) => {
+      if (wallpaper) {
+        const safePath = encodeURI(wallpaper.path);
+        downloadDialogTitle.textContent = 'Download wallpaper';
+        downloadDialogPreview.src = safePath;
+        downloadDialogPreview.alt = `${wallpaper.name} wallpaper preview`;
+        downloadDialogPreview.hidden = false;
+        downloadDialogItemName.textContent = wallpaper.name;
+        downloadDialogItemName.hidden = false;
+        downloadDialogDescription.textContent = `${wallpaper.type || 'Image'} · original file`;
+        downloadDialogDownload.href = safePath;
+        downloadDialogDownload.setAttribute('download', '');
+        downloadDialogDownloadLabel.textContent = 'Download image';
+      } else {
+        downloadDialogTitle.textContent = 'Download collection';
+        downloadDialogPreview.hidden = true;
+        downloadDialogPreview.removeAttribute('src');
+        downloadDialogPreview.alt = '';
+        downloadDialogItemName.hidden = true;
+        downloadDialogItemName.textContent = '';
+        downloadDialogDescription.textContent = 'Download the complete MiniWalls collection as a ZIP archive.';
+        downloadDialogDownload.href = collectionDownloadUrl;
+        downloadDialogDownload.removeAttribute('download');
+        downloadDialogDownloadLabel.textContent = 'Download';
+      }
+
+      downloadDialog.showModal();
+      syncBodyLock();
+    };
+
+    creditCopyButton.addEventListener('click', async () => {
+      const originalLabel = creditCopyButton.textContent;
+      try {
+        await copyText(creditText.textContent.trim());
+        creditCopyButton.textContent = 'Copied ✓';
+      } catch {
+        creditCopyButton.textContent = 'Copy failed';
+      }
+      window.setTimeout(() => { creditCopyButton.textContent = originalLabel; }, 1400);
+    });
+
+    downloadDialogCopyButton.addEventListener('click', async () => {
+      const label = downloadDialogCopyButton.querySelector('span');
+      const originalLabel = label.textContent;
+      try {
+        await copyText(downloadDialogCreditText.textContent.trim());
+        label.textContent = 'Copied ✓';
+      } catch {
+        label.textContent = 'Copy failed';
+      }
+      window.setTimeout(() => { label.textContent = originalLabel; }, 1400);
+    });
+
+    downloadDialogTrigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDownloadDialog();
+    });
+
+    lightboxDownloadAll.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDownloadDialog();
+    });
+
+    downloadDialogClose.addEventListener('click', () => downloadDialog.close());
+    downloadDialog.addEventListener('click', (event) => {
+      if (event.target === downloadDialog) downloadDialog.close();
+    });
+    downloadDialog.addEventListener('close', syncBodyLock);
 
     fetch('gallery.json')
       .then((response) => {
@@ -81,24 +535,196 @@
         return response.json();
       })
       .then((wallpapers) => {
-        gallery.innerHTML = wallpapers.map(({ name, path, type }) => {
+        const updateScrollIndicator = () => {
+          if (portraitLightbox.matches) {
+            const { clientWidth, scrollWidth, scrollLeft } = lightboxThumbnails;
+            lightboxScrollThumb.style.height = '100%';
+            lightboxScrollThumb.style.minHeight = '0';
+
+            if (!clientWidth || scrollWidth <= clientWidth) {
+              lightboxScrollThumb.style.width = '100%';
+              lightboxScrollThumb.style.transform = 'translateX(0)';
+              return;
+            }
+
+            const thumbWidth = Math.max(28, (clientWidth / scrollWidth) * clientWidth);
+            const availableTrack = clientWidth - thumbWidth;
+            const availableScroll = scrollWidth - clientWidth;
+            const left = (scrollLeft / availableScroll) * availableTrack;
+            lightboxScrollThumb.style.width = `${thumbWidth}px`;
+            lightboxScrollThumb.style.transform = `translateX(${left}px)`;
+            return;
+          }
+
+          const { clientHeight, scrollHeight, scrollTop } = lightboxThumbnails;
+          lightboxScrollThumb.style.width = '100%';
+          lightboxScrollThumb.style.minWidth = '0';
+
+          if (!clientHeight || scrollHeight <= clientHeight) {
+            lightboxScrollThumb.style.height = '100%';
+            lightboxScrollThumb.style.transform = 'translateY(0)';
+            return;
+          }
+
+          const thumbHeight = Math.max(28, (clientHeight / scrollHeight) * clientHeight);
+          const availableTrack = clientHeight - thumbHeight;
+          const availableScroll = scrollHeight - clientHeight;
+          const top = (scrollTop / availableScroll) * availableTrack;
+          lightboxScrollThumb.style.height = `${thumbHeight}px`;
+          lightboxScrollThumb.style.transform = `translateY(${top}px)`;
+        };
+
+        const centerActiveThumbnail = () => {
+          const activeThumbnail = lightboxThumbnails.querySelector('.is-active');
+          if (!activeThumbnail) return;
+
+          if (portraitLightbox.matches) {
+            const emptySpace = Math.ceil(lightboxThumbnails.clientWidth / 2);
+            lightboxThumbnails.style.paddingBlock = '0';
+            lightboxThumbnails.style.paddingInline = `${emptySpace}px`;
+            const target = activeThumbnail.offsetLeft - (lightboxThumbnails.clientWidth - activeThumbnail.clientWidth) / 2;
+            lightboxThumbnails.scrollTo({ left: target, top: 0, behavior: 'smooth' });
+          } else {
+            const emptySpace = Math.ceil(lightboxThumbnails.clientHeight / 2);
+            lightboxThumbnails.style.paddingInline = '0';
+            lightboxThumbnails.style.paddingBlock = `${emptySpace}px`;
+            const target = activeThumbnail.offsetTop - (lightboxThumbnails.clientHeight - activeThumbnail.clientHeight) / 2;
+            lightboxThumbnails.scrollTo({ top: target, left: 0, behavior: 'smooth' });
+          }
+
+          updateScrollIndicator();
+        };
+
+        const showWallpaper = (index) => {
+          activeWallpaper = (index + wallpapers.length) % wallpapers.length;
+          const wallpaper = wallpapers[activeWallpaper];
+          const safePath = encodeURI(wallpaper.path);
+          lightboxImage.src = safePath;
+          lightboxImage.alt = `${wallpaper.name} minimalist wallpaper`;
+          lightboxTitle.textContent = wallpaper.name;
+          lightboxDownload.href = safePath;
+          if (!lightboxThumbnails.children.length) {
+            lightboxThumbnails.innerHTML = wallpapers.map(({ name, path }, thumbnailIndex) => `
+              <button class="lightbox-thumbnail${thumbnailIndex === activeWallpaper ? ' is-active' : ''}"
+                      type="button" data-lightbox-index="${thumbnailIndex}" aria-label="Show ${escapeHtml(name)}">
+                <img src="${encodeURI(path)}" alt="" loading="lazy">
+              </button>`).join('');
+            lightboxThumbnails.querySelectorAll('img').forEach((image) => {
+              image.addEventListener('load', updateScrollIndicator, { once: true });
+            });
+          } else {
+            lightboxThumbnails.querySelectorAll('.lightbox-thumbnail').forEach((thumbnail, thumbnailIndex) => {
+              thumbnail.classList.toggle('is-active', thumbnailIndex === activeWallpaper);
+            });
+          }
+          requestAnimationFrame(centerActiveThumbnail);
+        };
+
+        const openLightbox = (index) => {
+          lightbox.showModal();
+          showWallpaper(index);
+          syncBodyLock();
+        };
+
+        gallery.innerHTML = wallpapers.map(({ name, path, type }, index) => {
           const safeName = escapeHtml(name);
           const safePath = encodeURI(path);
           return `
             <article class="card">
-              <a class="preview" href="${safePath}">
+              <a class="preview" href="${safePath}" data-gallery-index="${index}">
                 <img src="${safePath}" alt="${safeName} minimalist wallpaper" loading="lazy">
               </a>
               <div class="meta">
                 <h2>${safeName}</h2>
-                <a class="download" href="${safePath}" download>${type}</a>
+                <a class="download" href="${safePath}" download data-download-index="${index}">${type}</a>
               </div>
             </article>`;
         }).join('');
+
+        gallery.addEventListener('click', (event) => {
+          const download = event.target.closest('.download[data-download-index]');
+          if (download) {
+            event.preventDefault();
+            openDownloadDialog(wallpapers[Number(download.dataset.downloadIndex)]);
+            return;
+          }
+
+          const preview = event.target.closest('.preview');
+          if (!preview) return;
+          event.preventDefault();
+          openLightbox(Number(preview.dataset.galleryIndex));
+        });
+
+        lightboxDownload.addEventListener('click', (event) => {
+          event.preventDefault();
+          openDownloadDialog(wallpapers[activeWallpaper]);
+        });
+
+        lightboxThumbnails.addEventListener('click', (event) => {
+          const thumbnail = event.target.closest('.lightbox-thumbnail');
+          if (thumbnail) showWallpaper(Number(thumbnail.dataset.lightboxIndex));
+        });
+
+        document.querySelector('.lightbox-close').addEventListener('click', () => lightbox.close());
+        document.querySelector('.lightbox-previous').addEventListener('click', () => showWallpaper(activeWallpaper - 1));
+        document.querySelector('.lightbox-next').addEventListener('click', () => showWallpaper(activeWallpaper + 1));
+        lightboxThumbnails.addEventListener('scroll', updateScrollIndicator);
+        portraitLightbox.addEventListener('change', () => {
+          if (!lightbox.open) return;
+          requestAnimationFrame(centerActiveThumbnail);
+        });
+
+        const wheelStep = 120;
+        let wheelAccumulator = 0;
+        lightboxImage.addEventListener('wheel', (event) => {
+          if (!lightbox.open || !event.deltaY) return;
+          event.preventDefault();
+
+          const deltaScale = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+            ? 16
+            : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+              ? window.innerHeight
+              : 1;
+          const delta = event.deltaY * deltaScale;
+
+          if (wheelAccumulator && Math.sign(delta) !== Math.sign(wheelAccumulator)) {
+            wheelAccumulator = 0;
+          }
+          wheelAccumulator += delta;
+
+          if (Math.abs(wheelAccumulator) < wheelStep) return;
+
+          const direction = Math.sign(wheelAccumulator);
+          wheelAccumulator -= direction * wheelStep;
+          wheelAccumulator = Math.max(-wheelStep, Math.min(wheelStep, wheelAccumulator));
+          showWallpaper(activeWallpaper + direction);
+        }, { passive: false });
+
+        document.addEventListener('keydown', (event) => {
+          if (!lightbox.open || downloadDialog.open) return;
+          const key = event.key.toLowerCase();
+          if (key === 'a' || key === 'w') {
+            event.preventDefault();
+            showWallpaper(activeWallpaper - 1);
+          }
+          if (key === 's' || key === 'd') {
+            event.preventDefault();
+            showWallpaper(activeWallpaper + 1);
+          }
+        });
+
+        lightbox.addEventListener('click', (event) => {
+          if (event.target === lightbox) lightbox.close();
+        });
+        lightbox.addEventListener('close', () => {
+          wheelAccumulator = 0;
+          syncBodyLock();
+        });
       })
       .catch(() => {
         gallery.innerHTML = '<p class="gallery-status">Wallpapers are unavailable right now. Please try again soon.</p>';
       });
   </script>
+  <script src="credit-options.js"></script>
 </body>
 </html>
