@@ -59,6 +59,7 @@ a { color: inherit; }
 .hero-copy .button > span {
   border-color: var(--text);
   background: #000;
+  color: var(--text);
 }
 
 .hero-copy .button.primary {
@@ -291,6 +292,8 @@ h1 span {
 }
 
 .lightbox-rail {
+  grid-column: 1;
+  grid-row: 1;
   display: flex;
   min-height: 0;
   flex-direction: column;
@@ -363,6 +366,8 @@ h1 span {
 }
 
 .lightbox-stage {
+  grid-column: 2;
+  grid-row: 1;
   display: grid;
   min-width: 0;
   min-height: 0;
