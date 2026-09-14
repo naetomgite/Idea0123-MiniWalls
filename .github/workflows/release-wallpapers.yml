@@ -16,7 +16,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create wallpaper archive
-        run: zip -r MiniWalls-wallpapers.zip docs/wallpapers
+        run: |
+          cd docs/wallpapers
+          zip -r ../../MiniWalls-wallpapers.zip .
 
       - name: Publish GitHub release
         env:
