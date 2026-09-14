@@ -117,7 +117,7 @@ h1 span { display: block; }
 
 .idea-title {
   margin-bottom: .22em;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "Noto Serif", Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 900;
   letter-spacing: .04em;
@@ -375,6 +375,11 @@ h1 span { display: block; }
 .lightbox-caption button:hover,
 .lightbox-download:hover,
 .lightbox-download-all:hover {
+  background: var(--text);
+  color: #000;
+}
+
+.lightbox-download-all {
   background: var(--text);
   color: #000;
 }
