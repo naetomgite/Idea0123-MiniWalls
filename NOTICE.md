@@ -1,6 +1,6 @@
 # Notice
 
-Idea0123: MiniWalls is a wallpaper collection by @naetomgite.
+Idea0123: MiniWalls is a wallpaper collection by naetomgite.
 
 Some works may be unofficial fan art inspired by third-party products, games,
 brands, or other properties.
@@ -11,4 +11,4 @@ to their respective owners.
 No affiliation, sponsorship, or endorsement is implied.
 
 The Creative Commons license in this repository applies only to rights held by
-@naetomgite in the original creative contribution.
+naetomgite in the original creative contribution.
