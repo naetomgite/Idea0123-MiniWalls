@@ -125,7 +125,9 @@ h1 {
   z-index: 0;
   inset: -4px -5px -5px -4px;
   background: var(--ink);
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
   content: "";
+  transition: clip-path .12s ease;
 }
 
 .button > span {
@@ -164,6 +166,10 @@ h1 span {
 
 .button:active > span {
   transform: translate(5px, 5px);
+}
+
+.button:active::after {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 100% 100%, 0 100%, 0 100%);
 }
 
 .gallery {
