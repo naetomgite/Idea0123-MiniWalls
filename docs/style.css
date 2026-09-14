@@ -119,8 +119,8 @@ h1 span { display: block; }
   margin-bottom: .22em;
   font-family: Georgia, "Times New Roman", serif;
   font-style: italic;
-  font-weight: 400;
-  letter-spacing: -.12em;
+  font-weight: 900;
+  letter-spacing: .04em;
 }
 
 .button.primary {
