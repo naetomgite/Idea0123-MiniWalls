@@ -56,6 +56,149 @@
     .credit-copy:active { background: #b8b8b8; }
     .credit-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
+    .download-dialog {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      max-width: none;
+      height: 100dvh;
+      max-height: none;
+      margin: 0;
+      padding: 40px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .download-dialog[open] { display: block; }
+    .download-dialog::backdrop { background: rgb(0 0 0 / .66); }
+
+    .download-dialog-panel {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(820px, calc(100% - 80px));
+      padding: 20px;
+      border: 1px solid rgb(244 244 244 / .55);
+      background: rgb(37 37 37 / .88);
+      backdrop-filter: blur(12px);
+      transform: translate(-50%, -50%);
+    }
+
+    .download-dialog-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 16px;
+    }
+
+    .download-dialog-title,
+    .download-dialog-section h3 {
+      margin: 0;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .download-dialog-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(220px, .65fr);
+      gap: 12px;
+    }
+
+    .download-dialog-section {
+      min-width: 0;
+      padding: 22px;
+      border: 2px solid var(--line);
+      background: #111;
+    }
+
+    .download-dialog-section p {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .download-dialog-credit {
+      padding: 12px 14px;
+      border: 1px solid rgb(244 244 244 / .45);
+      color: var(--text) !important;
+      overflow-wrap: anywhere;
+    }
+
+    .download-dialog-license a { color: var(--text); }
+
+    .download-dialog-download-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .download-dialog-action {
+      position: relative;
+      display: inline-grid;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .download-dialog-action::after {
+      grid-area: 1 / 1;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      background: #8a8a8a;
+      content: "";
+      transform: translate(4px, 4px);
+    }
+
+    .download-dialog-action > span {
+      position: relative;
+      z-index: 1;
+      grid-area: 1 / 1;
+      display: block;
+      border: 2px solid var(--text);
+      padding: 9px 12px;
+      background: #000;
+      color: var(--text);
+      transform: translate(0, 0);
+      transition: transform .12s ease;
+    }
+
+    .download-dialog-action:hover > span { transform: translate(-2px, -2px); }
+    .download-dialog-action:active > span { transform: translate(4px, 4px); }
+
+    .download-dialog-download {
+      width: 100%;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .download-dialog-download > span {
+      background: var(--text);
+      color: var(--ink);
+    }
+
+    @media (max-width: 700px) {
+      .download-dialog { padding: 12px; }
+      .download-dialog-panel {
+        width: calc(100% - 24px);
+        padding: 12px;
+      }
+      .download-dialog-grid { grid-template-columns: 1fr; }
+      .download-dialog-section { padding: 18px; }
+    }
+
     @media (orientation: portrait) {
       .lightbox-panel {
         grid-template-columns: minmax(0, 1fr);
@@ -128,7 +271,7 @@
           for a calm, distraction-free desktop.
         </p>
         <div class="actions">
-          <a class="button primary" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip"><span>Download collection</span></a>
+          <a class="button primary download-collection-trigger" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip"><span>Download collection</span></a>
           <a class="button" href="#gallery"><span>Browse collection</span></a>
           <a class="button" href="#license"><span>View license</span></a>
           <a class="button" href="https://github.com/naetomgite"><span>GitHub</span></a>
@@ -180,6 +323,30 @@
     <a href="https://github.com/naetomgite/Idea0123-MiniWalls">GitHub</a>
   </footer>
 
+  <dialog class="download-dialog" aria-labelledby="download-dialog-title">
+    <div class="download-dialog-panel">
+      <div class="download-dialog-toolbar">
+        <p class="download-dialog-title" id="download-dialog-title">Download collection</p>
+        <button class="download-dialog-close download-dialog-action" type="button" aria-label="Close download dialog"><span>Close ×</span></button>
+      </div>
+      <div class="download-dialog-grid">
+        <section class="download-dialog-section">
+          <h3>Please credit the artist</h3>
+          <p>If you redistribute these wallpapers, please include attribution to @naetomgite and keep the original files unmodified.</p>
+          <p class="download-dialog-credit">Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
+          <p class="download-dialog-license">License reminder: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>. Non-commercial sharing of the original, unmodified artwork is allowed with attribution. Modified or commercial redistribution is not permitted.</p>
+        </section>
+        <section class="download-dialog-section download-dialog-download-block">
+          <div>
+            <h3>Download</h3>
+            <p>Download the complete MiniWalls collection as a ZIP archive.</p>
+          </div>
+          <a class="download-dialog-download download-dialog-action" href="https://github.com/naetomgite/Idea0123-MiniWalls/releases/latest/download/MiniWalls-wallpapers.zip"><span>Download</span></a>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
   <dialog class="lightbox" aria-labelledby="lightbox-title">
     <div class="lightbox-panel">
       <aside class="lightbox-rail" aria-label="Wallpaper carousel">
@@ -221,6 +388,9 @@
     const lightboxDownload = document.querySelector('.lightbox-download');
     const creditText = document.querySelector('#credit-text');
     const creditCopyButton = document.querySelector('.credit-copy');
+    const downloadDialog = document.querySelector('.download-dialog');
+    const downloadDialogTrigger = document.querySelector('.download-collection-trigger');
+    const downloadDialogClose = document.querySelector('.download-dialog-close');
     const portraitLightbox = window.matchMedia('(orientation: portrait)');
     let activeWallpaper = 0;
 
@@ -255,6 +425,18 @@
       }
       window.setTimeout(() => { creditCopyButton.textContent = originalLabel; }, 1400);
     });
+
+    downloadDialogTrigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      downloadDialog.showModal();
+      document.body.classList.add('lightbox-open');
+    });
+
+    downloadDialogClose.addEventListener('click', () => downloadDialog.close());
+    downloadDialog.addEventListener('click', (event) => {
+      if (event.target === downloadDialog) downloadDialog.close();
+    });
+    downloadDialog.addEventListener('close', () => document.body.classList.remove('lightbox-open'));
 
     fetch('gallery.json')
       .then((response) => {
