@@ -55,6 +55,66 @@
     .credit-copy:hover { background: #d8d8d8; }
     .credit-copy:active { background: #b8b8b8; }
     .credit-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+    @media (orientation: portrait) {
+      .lightbox-panel {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto;
+        width: min(900px, 100%);
+        height: min(1100px, 100%);
+        gap: 16px;
+      }
+
+      .lightbox-stage {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .lightbox-rail {
+        grid-column: 1;
+        grid-row: 2;
+        min-width: 0;
+        min-height: auto;
+        padding-right: 0;
+      }
+
+      .lightbox-carousel {
+        min-width: 0;
+        min-height: 0;
+        height: clamp(88px, 18vw, 126px);
+        flex: none;
+        margin-top: 10px;
+        padding-right: 0;
+        padding-bottom: 10px;
+      }
+
+      .lightbox-thumbnails {
+        grid-auto-flow: column;
+        grid-auto-columns: clamp(120px, 26vw, 190px);
+        align-items: start;
+        width: 100%;
+        height: auto;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .lightbox-scroll-track {
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        height: 4px;
+      }
+
+      .lightbox-scroll-thumb {
+        width: 28px;
+        min-width: 28px;
+        height: 100%;
+        min-height: 0;
+        transition: transform .16s ease, width .16s ease;
+      }
+    }
   </style>
 </head>
 <body>
@@ -162,9 +222,10 @@
     const lightboxDownload = document.querySelector('.lightbox-download');
     const creditText = document.querySelector('#credit-text');
     const creditCopyButton = document.querySelector('.credit-copy');
+    const portraitLightbox = window.matchMedia('(orientation: portrait)');
     let activeWallpaper = 0;
 
-    const escapeHtml = (value) => value.replace(/[&<>'"]/g, (character) => ({
+    const escapeHtml = (value) => value.replace(/[&<>'\"]/g, (character) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[character]));
 
@@ -203,12 +264,36 @@
       })
       .then((wallpapers) => {
         const updateScrollIndicator = () => {
+          if (portraitLightbox.matches) {
+            const { clientWidth, scrollWidth, scrollLeft } = lightboxThumbnails;
+            lightboxScrollThumb.style.height = '100%';
+            lightboxScrollThumb.style.minHeight = '0';
+
+            if (!clientWidth || scrollWidth <= clientWidth) {
+              lightboxScrollThumb.style.width = '100%';
+              lightboxScrollThumb.style.transform = 'translateX(0)';
+              return;
+            }
+
+            const thumbWidth = Math.max(28, (clientWidth / scrollWidth) * clientWidth);
+            const availableTrack = clientWidth - thumbWidth;
+            const availableScroll = scrollWidth - clientWidth;
+            const left = (scrollLeft / availableScroll) * availableTrack;
+            lightboxScrollThumb.style.width = `${thumbWidth}px`;
+            lightboxScrollThumb.style.transform = `translateX(${left}px)`;
+            return;
+          }
+
           const { clientHeight, scrollHeight, scrollTop } = lightboxThumbnails;
+          lightboxScrollThumb.style.width = '100%';
+          lightboxScrollThumb.style.minWidth = '0';
+
           if (!clientHeight || scrollHeight <= clientHeight) {
             lightboxScrollThumb.style.height = '100%';
             lightboxScrollThumb.style.transform = 'translateY(0)';
             return;
           }
+
           const thumbHeight = Math.max(28, (clientHeight / scrollHeight) * clientHeight);
           const availableTrack = clientHeight - thumbHeight;
           const availableScroll = scrollHeight - clientHeight;
@@ -220,10 +305,21 @@
         const centerActiveThumbnail = () => {
           const activeThumbnail = lightboxThumbnails.querySelector('.is-active');
           if (!activeThumbnail) return;
-          const emptySpace = Math.ceil(lightboxThumbnails.clientHeight / 2);
-          lightboxThumbnails.style.paddingBlock = `${emptySpace}px`;
-          const target = activeThumbnail.offsetTop - (lightboxThumbnails.clientHeight - activeThumbnail.clientHeight) / 2;
-          lightboxThumbnails.scrollTo({ top: target, behavior: 'smooth' });
+
+          if (portraitLightbox.matches) {
+            const emptySpace = Math.ceil(lightboxThumbnails.clientWidth / 2);
+            lightboxThumbnails.style.paddingBlock = '0';
+            lightboxThumbnails.style.paddingInline = `${emptySpace}px`;
+            const target = activeThumbnail.offsetLeft - (lightboxThumbnails.clientWidth - activeThumbnail.clientWidth) / 2;
+            lightboxThumbnails.scrollTo({ left: target, top: 0, behavior: 'smooth' });
+          } else {
+            const emptySpace = Math.ceil(lightboxThumbnails.clientHeight / 2);
+            lightboxThumbnails.style.paddingInline = '0';
+            lightboxThumbnails.style.paddingBlock = `${emptySpace}px`;
+            const target = activeThumbnail.offsetTop - (lightboxThumbnails.clientHeight - activeThumbnail.clientHeight) / 2;
+            lightboxThumbnails.scrollTo({ top: target, left: 0, behavior: 'smooth' });
+          }
+
           updateScrollIndicator();
         };
 
@@ -290,6 +386,11 @@
         document.querySelector('.lightbox-previous').addEventListener('click', () => showWallpaper(activeWallpaper - 1));
         document.querySelector('.lightbox-next').addEventListener('click', () => showWallpaper(activeWallpaper + 1));
         lightboxThumbnails.addEventListener('scroll', updateScrollIndicator);
+        portraitLightbox.addEventListener('change', () => {
+          if (!lightbox.open) return;
+          requestAnimationFrame(centerActiveThumbnail);
+        });
+
         let wheelLocked = false;
         lightboxStage.addEventListener('wheel', (event) => {
           if (!lightbox.open || !event.deltaY) return;
