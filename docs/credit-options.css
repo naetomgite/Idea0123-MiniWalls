@@ -91,3 +91,46 @@
 .credit-option-copy:hover { background: #d8d8d8; }
 .credit-option-copy:active { background: #b8b8b8; }
 .credit-option-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+@media (max-width: 700px) {
+  body .download-dialog .download-dialog-panel {
+    left: 12px;
+    width: calc(100% - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 10px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    transform: translateY(-50%);
+  }
+
+  body .download-dialog .download-dialog-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    padding-bottom: 10px;
+    background: rgb(37 37 37 / .96);
+    backdrop-filter: blur(12px);
+  }
+
+  body .download-dialog .download-dialog-grid {
+    gap: 8px;
+  }
+
+  body .download-dialog .download-dialog-section {
+    padding: 14px;
+  }
+
+  body .download-dialog .download-dialog-section p {
+    margin-top: 10px;
+  }
+
+  body .download-dialog .download-dialog-preview {
+    max-height: 110px;
+    margin-bottom: 10px;
+  }
+
+  body .download-dialog .download-dialog-download {
+    margin-top: 16px;
+  }
+}
