@@ -3,6 +3,14 @@
   const moreCreditLink = document.querySelector('.download-dialog-more-credit');
   if (!main || !moreCreditLink) return;
 
+  const creditStack = document.querySelector('#license .credit-stack');
+  if (creditStack) {
+    const minimumCreditNote = document.createElement('p');
+    minimumCreditNote.className = 'minimum-credit-note';
+    minimumCreditNote.innerHTML = '<strong>Minimum attribution:</strong> include (1) a link shown as <code>naetomgite.github.io/Idea0123-MiniWalls</code> or <code>https://naetomgite.github.io/Idea0123-MiniWalls/</code>, or a QR code pointing to it; (2) the project name as <code>Idea0123: MiniWalls</code>, <code>Idea0123-MiniWalls</code>, <code>Idea0123</code>, or <code>Idea0123_MiniWalls</code>; and (3) an author reference as <code>github.com/naetomgite</code>, <code>GitHub: naetomgite</code>, <code>By naetomgite (GitHub)</code>, <code>https://naetomgite.github.io/Idea0123-MiniWalls/</code>, or <code>naetomgite</code> accompanied by the GitHub logo.';
+    creditStack.insertAdjacentElement('afterend', minimumCreditNote);
+  }
+
   const section = document.createElement('section');
   section.className = 'info credit-options-section';
   section.innerHTML = `
