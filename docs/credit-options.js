@@ -13,19 +13,19 @@
 
         <div class="credit-option">
           <p class="credit-option-label">Full credit</p>
-          <p class="credit-option-text" id="credit-option-full">Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
+          <p class="credit-option-text" id="credit-option-full">Artwork by naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
           <button class="credit-option-copy" type="button" data-copy-target="credit-option-full">Copy</button>
         </div>
 
         <div class="credit-option">
           <p class="credit-option-label">Short credit</p>
-          <p class="credit-option-text" id="credit-option-short">naetomgite.github.io/Idea0123-MiniWalls by @naetomgite</p>
+          <p class="credit-option-text" id="credit-option-short">naetomgite.github.io/Idea0123-MiniWalls by naetomgite</p>
           <button class="credit-option-copy" type="button" data-copy-target="credit-option-short">Copy</button>
         </div>
 
         <div class="credit-option">
           <p class="credit-option-label">With license</p>
-          <p class="credit-option-text" id="credit-option-license">Idea0123: MiniWalls © 2026 @naetomgite · CC BY-NC-ND 4.0 · https://naetomgite.github.io/Idea0123-MiniWalls/</p>
+          <p class="credit-option-text" id="credit-option-license">Idea0123: MiniWalls © 2026 naetomgite · CC BY-NC-ND 4.0 · https://naetomgite.github.io/Idea0123-MiniWalls/</p>
           <button class="credit-option-copy" type="button" data-copy-target="credit-option-license">Copy</button>
         </div>
       </div>
@@ -76,4 +76,13 @@
       creditOptions.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
+
+  const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  let textNode = textWalker.nextNode();
+  while (textNode) {
+    if (textNode.nodeValue.includes('@naetomgite')) {
+      textNode.nodeValue = textNode.nodeValue.replaceAll('@naetomgite', 'naetomgite');
+    }
+    textNode = textWalker.nextNode();
+  }
 })();
