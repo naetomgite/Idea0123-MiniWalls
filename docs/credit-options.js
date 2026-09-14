@@ -7,7 +7,7 @@
   if (creditStack) {
     const minimumCreditNote = document.createElement('p');
     minimumCreditNote.className = 'minimum-credit-note';
-    minimumCreditNote.innerHTML = '<strong>Minimum attribution:</strong> include (1) a link shown as <code>naetomgite.github.io/Idea0123-MiniWalls</code> or <code>https://naetomgite.github.io/Idea0123-MiniWalls/</code>, or a QR code pointing to it; (2) the project name as <code>Idea0123: MiniWalls</code>, <code>Idea0123-MiniWalls</code>, <code>Idea0123</code>, or <code>Idea0123_MiniWalls</code>; and (3) an author reference as <code>github.com/naetomgite</code>, <code>GitHub: naetomgite</code>, <code>By naetomgite (GitHub)</code>, <code>https://naetomgite.github.io/Idea0123-MiniWalls/</code>, or <code>naetomgite</code> accompanied by the GitHub logo.';
+    minimumCreditNote.innerHTML = `<strong>Minimum attribution:</strong> include (1) a link shown as “naetomgite.github.io/Idea0123-MiniWalls” or “https://naetomgite.github.io/Idea0123-MiniWalls/”, or a QR code pointing to it; (2) the project name as “Idea0123: MiniWalls”, “Idea0123-MiniWalls”, “Idea0123”, or “Idea0123_MiniWalls”; and (3) an author reference as “github.com/naetomgite”, “GitHub: naetomgite”, “By naetomgite (GitHub)”, “https://naetomgite.github.io/Idea0123-MiniWalls/”, or “naetomgite” accompanied by the GitHub logo. To make sure your attribution is correct, visit the <a class="minimum-credit-more-link" href="#credit-options">More ways to credit</a> section.`;
     creditStack.insertAdjacentElement('afterend', minimumCreditNote);
   }
 
@@ -55,6 +55,7 @@
   const creditOptions = section.querySelector('#credit-options');
   const lightbox = document.querySelector('.lightbox');
   const downloadDialog = document.querySelector('.download-dialog');
+  const minimumCreditMoreLink = document.querySelector('.minimum-credit-more-link');
 
   const copyText = async (text) => {
     if (navigator.clipboard && window.isSecureContext) {
@@ -87,14 +88,23 @@
     });
   });
 
-  moreCreditLink.addEventListener('click', (event) => {
-    event.preventDefault();
+  const openCreditOptions = () => {
     creditOptions.open = true;
     if (downloadDialog?.open) downloadDialog.close();
     if (lightbox?.open) lightbox.close();
     requestAnimationFrame(() => {
       creditOptions.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  };
+
+  moreCreditLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    openCreditOptions();
+  });
+
+  minimumCreditMoreLink?.addEventListener('click', (event) => {
+    event.preventDefault();
+    openCreditOptions();
   });
 
   const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
