@@ -395,9 +395,10 @@ h1 span {
 .lightbox-caption button,
 .lightbox-download,
 .lightbox-download-all {
-  border: 2px solid var(--text);
-  border-radius: 0;
-  padding: 9px 12px;
+  position: relative;
+  display: inline-block;
+  border: 0;
+  padding: 0;
   background: transparent;
   color: var(--text);
   font: inherit;
@@ -409,18 +410,38 @@ h1 span {
   cursor: pointer;
 }
 
-.lightbox-close:hover,
-.lightbox-caption button:hover,
-.lightbox-download:hover,
-.lightbox-download-all:hover {
+.lightbox-action::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: #8a8a8a;
+  content: "";
+  transform: translate(4px, 4px);
+}
+
+.lightbox-action > span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  border: 2px solid var(--text);
+  padding: 9px 12px;
+  background: #000;
+  color: var(--text);
+  transform: translate(-3px, -3px);
+  transition: transform .12s ease;
+}
+
+.lightbox-download-all {
+  color: #000;
+}
+
+.lightbox-download-all > span {
   background: var(--text);
   color: #000;
 }
 
-.lightbox-download-all {
-  background: var(--text);
-  color: #000;
-}
+.lightbox-action:hover > span { transform: translate(-5px, -5px); }
+.lightbox-action:active > span { transform: translate(4px, 4px); }
 
 .lightbox:focus-visible,
 .lightbox :focus-visible,
