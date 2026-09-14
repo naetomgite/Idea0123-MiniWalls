@@ -10,7 +10,7 @@ Created by [@naetomgite](https://github.com/naetomgite).
 
 Browse the GitHub Pages gallery and download individual wallpapers as PNGs.
 The gallery is rebuilt automatically from every image in `docs/wallpapers/`
-when a commit is pushed to `dev-pages`.
+when a commit is pushed to `dev-pages` or `main`.
 
 ## Artwork license
 
@@ -70,5 +70,5 @@ is implied.
 1. Push this project to `https://github.com/naetomgite/Idea0123-MiniWalls` (or rename the repository and update the URLs).
 2. Open **Settings → Pages**.
 3. Under **Build and deployment**, choose **GitHub Actions**.
-4. Push to `dev-pages`. The included workflow generates the gallery and deploys
-   the contents of `docs/`.
+4. Push to `dev-pages` or `main`. The included workflow generates the gallery
+   and deploys the contents of `docs/`.
