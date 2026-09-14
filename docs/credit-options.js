@@ -7,7 +7,7 @@
   if (creditStack) {
     const minimumCreditNote = document.createElement('p');
     minimumCreditNote.className = 'minimum-credit-note';
-    minimumCreditNote.innerHTML = `<strong>Minimum attribution:</strong> include (1) a link shown as “naetomgite.github.io/Idea0123-MiniWalls” or “https://naetomgite.github.io/Idea0123-MiniWalls/”, or a QR code pointing to it; (2) the project name as “Idea0123: MiniWalls”, “Idea0123-MiniWalls”, “Idea0123”, or “Idea0123_MiniWalls”; and (3) an author reference as “github.com/naetomgite”, “GitHub: naetomgite”, “By naetomgite (GitHub)”, “https://naetomgite.github.io/Idea0123-MiniWalls/”, or “naetomgite” accompanied by the GitHub logo. To make sure your attribution is correct, visit the <a class="minimum-credit-more-link" href="#credit-options">More ways to credit</a> section.`;
+    minimumCreditNote.innerHTML = `<strong>Minimum attribution:</strong> include (1) a link shown as “naetomgite.github.io/Idea0123-MiniWalls” or “https://naetomgite.github.io/Idea0123-MiniWalls/”, or a QR code pointing to it; (2) the project name as “Idea0123: MiniWalls”, “Idea0123-MiniWalls”, “Idea0123”, or “Idea0123_MiniWalls”; and (3) an author reference as “github.com/naetomgite”, “GitHub: naetomgite”, “By naetomgite (GitHub)”, “https://naetomgite.github.io/Idea0123-MiniWalls/”, or “naetomgite” accompanied by the GitHub logo. To make sure your attribution is correct, you can visit the <a class="minimum-credit-more-link" href="#credit-options">More ways to credit</a> section.`;
     creditStack.insertAdjacentElement('afterend', minimumCreditNote);
   }
 
