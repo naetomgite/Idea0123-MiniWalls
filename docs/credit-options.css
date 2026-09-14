@@ -120,12 +120,21 @@
     margin-top: 10px;
   }
 
-  body .download-dialog .download-dialog-preview {
-    max-height: 110px;
-    margin-bottom: 10px;
+  body .download-dialog .download-dialog-download-block {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  body .download-dialog .download-dialog-preview,
+  body .download-dialog .download-dialog-download-heading,
+  body .download-dialog .download-dialog-item-name,
+  body .download-dialog .download-dialog-description {
+    display: none !important;
   }
 
   body .download-dialog .download-dialog-download {
-    margin-top: 16px;
+    margin-top: 0;
   }
 }
