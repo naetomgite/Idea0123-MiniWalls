@@ -28,6 +28,18 @@
           <p class="credit-option-text" id="credit-option-license">Idea0123: MiniWalls © 2026 naetomgite · CC BY-NC-ND 4.0 · https://naetomgite.github.io/Idea0123-MiniWalls/</p>
           <button class="credit-option-copy" type="button" data-copy-target="credit-option-license">Copy</button>
         </div>
+
+        <div class="credit-option">
+          <p class="credit-option-label">Markdown short</p>
+          <p class="credit-option-text" id="credit-option-markdown-short">[Idea0123 by naetomgite](https://naetomgite.github.io/Idea0123-MiniWalls/)</p>
+          <button class="credit-option-copy" type="button" data-copy-target="credit-option-markdown-short">Copy</button>
+        </div>
+
+        <div class="credit-option">
+          <p class="credit-option-label">Markdown with license</p>
+          <p class="credit-option-text" id="credit-option-markdown-license">[Idea0123: MiniWalls © 2026 naetomgite · CC BY-NC-ND 4.0](https://naetomgite.github.io/Idea0123-MiniWalls/)</p>
+          <button class="credit-option-copy" type="button" data-copy-target="credit-option-markdown-license">Copy</button>
+        </div>
       </div>
     </details>`;
   main.appendChild(section);
