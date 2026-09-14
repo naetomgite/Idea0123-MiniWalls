@@ -226,13 +226,15 @@ h1 {
 }
 
 .lightbox[open] {
-  display: grid;
-  place-items: center;
+  display: block;
 }
 
 .lightbox::backdrop { background: rgb(0 0 0 / .66); }
 
 .lightbox-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: grid;
   grid-template-columns: 225px minmax(0, 1fr);
   width: min(1200px, 100%);
@@ -242,6 +244,7 @@ h1 {
   border: 1px solid rgb(244 244 244 / .55);
   background: rgb(37 37 37 / .88);
   backdrop-filter: blur(12px);
+  transform: translate(-50%, -50%);
 }
 
 .lightbox-rail {
