@@ -32,90 +32,22 @@ a { color: inherit; }
   margin-inline: auto;
 }
 
-.site-nav {
-  display: grid;
-  grid-template-columns: 190px 1fr 190px;
-  min-height: 88px;
-  background: var(--text);
-  color: var(--ink);
-  border-bottom: 4px solid var(--ink);
-}
-
-.site-nav a { text-decoration: none; }
-
-.wordmark,
-.nav-github,
-.nav-links a {
-  display: flex;
-  align-items: center;
-  padding: 16px 20px;
-  border-right: 3px solid var(--ink);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  text-transform: uppercase;
-}
-
-.wordmark {
-  font-size: 1.25rem;
-  line-height: .88;
-}
-
-.wordmark span { font-size: .65em; }
-
-.nav-links {
-  display: flex;
-  justify-content: center;
-}
-
-.nav-links a {
-  border-right: 0;
-  padding-inline: clamp(16px, 4vw, 52px);
-  font-size: .82rem;
-}
-
-.nav-links a:hover,
-.nav-github:hover { background: #d5cfc2; }
-
-.nav-github {
-  justify-content: center;
-  border-right: 0;
-  border-left: 3px solid var(--ink);
-  font-size: .82rem;
-}
-
 .hero {
-  border-bottom: 3px solid var(--line);
+  padding: 48px 0 0;
 }
 
 .hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(280px, .7fr);
+  display: block;
   min-height: 520px;
-  border-inline: 3px solid var(--line);
 }
 
 .hero-copy {
+  width: min(820px, 100%);
+  min-height: 520px;
+  margin-inline: auto;
   padding: clamp(40px, 7vw, 100px);
   background: var(--cyan);
   color: var(--ink);
-}
-
-.hero-mark {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 30px;
-  background: var(--accent);
-  border-left: 3px solid var(--line);
-  color: var(--text);
-  text-transform: uppercase;
-  font-weight: 800;
-  line-height: .9;
-}
-
-.hero-mark strong {
-  font-size: clamp(3rem, 7vw, 7rem);
-  letter-spacing: -.09em;
 }
 
 .eyebrow {
@@ -258,13 +190,9 @@ h1 {
 
 @media (max-width: 600px) {
   .wrap { width: min(100% - 24px, 1100px); }
-  .site-nav { grid-template-columns: 1fr auto; min-height: 64px; }
-  .nav-links { display: none; }
-  .wordmark { padding: 12px; border-right: 0; }
-  .nav-github { padding: 12px; border-left: 3px solid var(--ink); }
-  .hero-grid { grid-template-columns: 1fr; min-height: 0; }
+  .hero { padding-top: 24px; }
+  .hero-grid { min-height: 0; }
   .hero-copy { padding: 48px 28px; }
-  .hero-mark { min-height: 190px; border-top: 3px solid var(--line); border-left: 0; }
   .gallery { grid-template-columns: 1fr; }
 }
 
