@@ -123,10 +123,9 @@ h1 {
 .button::after {
   position: absolute;
   z-index: 0;
-  inset: 0;
+  inset: -4px -5px -5px -4px;
   background: var(--ink);
   content: "";
-  transform: translate(5px, 5px);
 }
 
 .button > span {
