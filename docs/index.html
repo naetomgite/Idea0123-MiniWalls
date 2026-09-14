@@ -216,7 +216,6 @@
     const lightbox = document.querySelector('.lightbox');
     const lightboxImage = document.querySelector('.lightbox-image');
     const lightboxTitle = document.querySelector('#lightbox-title');
-    const lightboxStage = document.querySelector('.lightbox-stage');
     const lightboxThumbnails = document.querySelector('.lightbox-thumbnails');
     const lightboxScrollThumb = document.querySelector('.lightbox-scroll-thumb');
     const lightboxDownload = document.querySelector('.lightbox-download');
@@ -391,14 +390,15 @@
           requestAnimationFrame(centerActiveThumbnail);
         });
 
-        let wheelLocked = false;
-        lightboxStage.addEventListener('wheel', (event) => {
+        let lastWheelNavigation = 0;
+        lightboxImage.addEventListener('wheel', (event) => {
           if (!lightbox.open || !event.deltaY) return;
           event.preventDefault();
-          if (wheelLocked) return;
-          wheelLocked = true;
+
+          const now = performance.now();
+          if (now - lastWheelNavigation < 120) return;
+          lastWheelNavigation = now;
           showWallpaper(activeWallpaper + (event.deltaY > 0 ? 1 : -1));
-          window.setTimeout(() => { wheelLocked = false; }, 350);
         }, { passive: false });
         document.addEventListener('keydown', (event) => {
           if (!lightbox.open) return;
