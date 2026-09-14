@@ -9,6 +9,53 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .credit-stack {
+      width: min(100%, 760px);
+      margin-top: 24px;
+    }
+
+    .info .credit-label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .info .credit {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 14px 16px;
+      border: 2px solid var(--line);
+      background: var(--ink);
+      color: var(--text);
+      overflow-wrap: anywhere;
+    }
+
+    .credit-copy {
+      width: 100%;
+      margin: 0;
+      padding: 10px 16px;
+      border: 2px solid var(--line);
+      border-top: 0;
+      border-radius: 0;
+      background: var(--text);
+      color: var(--ink);
+      font: inherit;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .credit-copy:hover { background: #d8d8d8; }
+    .credit-copy:active { background: #b8b8b8; }
+    .credit-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  </style>
 </head>
 <body>
   <header class="hero">
@@ -48,10 +95,11 @@
         You may share the original, unmodified wallpapers for non-commercial
         purposes with appropriate attribution.
       </p>
-      <p class="credit">
-        Suggested credit:
-        <strong>Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</strong>
-      </p>
+      <div class="credit-stack">
+        <p class="credit-label">Suggested credit</p>
+        <p class="credit" id="credit-text">Artwork by @naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
+        <button class="credit-copy" type="button" aria-describedby="credit-text">Copy</button>
+      </div>
     </section>
 
     <section class="info">
@@ -112,11 +160,41 @@
     const lightboxThumbnails = document.querySelector('.lightbox-thumbnails');
     const lightboxScrollThumb = document.querySelector('.lightbox-scroll-thumb');
     const lightboxDownload = document.querySelector('.lightbox-download');
+    const creditText = document.querySelector('#credit-text');
+    const creditCopyButton = document.querySelector('.credit-copy');
     let activeWallpaper = 0;
 
     const escapeHtml = (value) => value.replace(/[&<>'"]/g, (character) => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
     }[character]));
+
+    const copyText = async (text) => {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return;
+      }
+
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    };
+
+    creditCopyButton.addEventListener('click', async () => {
+      const originalLabel = creditCopyButton.textContent;
+      try {
+        await copyText(creditText.textContent.trim());
+        creditCopyButton.textContent = 'Copied ✓';
+      } catch {
+        creditCopyButton.textContent = 'Copy failed';
+      }
+      window.setTimeout(() => { creditCopyButton.textContent = originalLabel; }, 1400);
+    });
 
     fetch('gallery.json')
       .then((response) => {
