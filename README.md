@@ -8,8 +8,9 @@ Created by [@naetomgite](https://github.com/naetomgite).
 
 ## Download
 
-Browse individual wallpapers in the GitHub Pages gallery or download the
-complete collection as a ZIP archive.
+Browse the GitHub Pages gallery and download individual wallpapers as PNGs.
+The gallery is rebuilt automatically from every image in `docs/wallpapers/`
+when a commit is pushed to `dev-pages`.
 
 ## Artwork license
 
@@ -68,6 +69,6 @@ is implied.
 
 1. Push this project to `https://github.com/naetomgite/Idea0123-MiniWalls` (or rename the repository and update the URLs).
 2. Open **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select branch `main` and folder `/docs`.
-5. Save.
+3. Under **Build and deployment**, choose **GitHub Actions**.
+4. Push to `dev-pages`. The included workflow generates the gallery and deploys
+   the contents of `docs/`.

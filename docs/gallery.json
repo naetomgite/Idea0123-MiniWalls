@@ -1,0 +1,57 @@
+[
+  {
+    "name": "8ball",
+    "path": "wallpapers/2k/8ball.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Buttons",
+    "path": "wallpapers/2k/buttons.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Cat Eyes",
+    "path": "wallpapers/2k/cat_eyes.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Catus",
+    "path": "wallpapers/2k/catus.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Coffee",
+    "path": "wallpapers/2k/coffee.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Dice 3d 3 4",
+    "path": "wallpapers/2k/dice-3d-3-4.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Draw",
+    "path": "wallpapers/2k/draw.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Pacman",
+    "path": "wallpapers/2k/pacman.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Pizza",
+    "path": "wallpapers/2k/pizza.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Shappes",
+    "path": "wallpapers/2k/shappes.png",
+    "type": "PNG"
+  },
+  {
+    "name": "Tic Tac Toe",
+    "path": "wallpapers/2k/tic-tac-toe.png",
+    "type": "PNG"
+  }
+]
