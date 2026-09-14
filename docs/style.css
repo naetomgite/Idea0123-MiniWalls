@@ -33,7 +33,7 @@ a { color: inherit; }
 }
 
 .hero {
-  padding: 48px 0 0;
+  padding: clamp(84px, 10vh, 132px) 0 0;
 }
 
 .hero-grid {
@@ -111,6 +111,15 @@ h1 {
   font-weight: 800;
   letter-spacing: .04em;
   text-transform: uppercase;
+}
+
+h1 span { display: block; }
+
+.idea-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -.12em;
 }
 
 .button.primary {
@@ -389,7 +398,7 @@ h1 {
 
 @media (max-width: 600px) {
   .wrap { width: min(100% - 24px, 1100px); }
-  .hero { padding-top: 24px; }
+  .hero { padding-top: 48px; }
   .hero-grid { min-height: 0; }
   .hero-copy { padding: 48px 28px; }
   .gallery { grid-template-columns: 1fr; }
