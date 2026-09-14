@@ -127,7 +127,7 @@ h1 {
   background: var(--ink);
   clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
   content: "";
-  transition: clip-path .12s ease;
+  transition: inset .12s ease, clip-path .12s ease;
 }
 
 .button > span {
@@ -166,7 +166,13 @@ h1 span {
 }
 
 .button:active > span {
-  transform: translate(5px, 5px);
+  transform: translate(0, 0);
+}
+
+/* A pressed button settles onto the page: its beveled base contracts away. */
+.button:active::after {
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .gallery {
@@ -443,7 +449,8 @@ h1 span {
 }
 
 .lightbox-action:hover > span { transform: translate(-5px, -5px); }
-.lightbox-action:active > span { transform: translate(4px, 4px); }
+.lightbox-action:active > span { transform: translate(0, 0); }
+.lightbox-action:active::after { transform: translate(0, 0); }
 
 .lightbox:focus-visible,
 .lightbox :focus-visible,
