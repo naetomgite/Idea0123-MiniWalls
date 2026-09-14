@@ -82,7 +82,7 @@ a { color: inherit; }
 
 h1 {
   margin: 0;
-  font-size: clamp(4rem, 11vw, 10rem);
+  font-size: clamp(3.7rem, 9.5vw, 8.5rem);
   line-height: .77;
   letter-spacing: -.1em;
   text-transform: uppercase;
