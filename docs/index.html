@@ -19,30 +19,15 @@
         background.
       </p>
       <div class="actions">
-        <a class="button primary" href="downloads/collection.zip">Download collection</a>
+        <a class="button primary" href="#gallery">Browse wallpapers</a>
         <a class="button" href="#license">License</a>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="gallery" aria-label="Wallpaper gallery">
-      <article class="card">
-        <a class="preview" href="wallpapers/playstation-buttons.png">
-          <img src="wallpapers/playstation-buttons.png"
-               alt="Minimal wallpaper with four colored controller button symbols"
-               loading="lazy">
-        </a>
-        <div class="meta">
-          <div>
-            <h2>PlayStation Buttons</h2>
-            <p>Unofficial fan art</p>
-          </div>
-          <a class="download" href="wallpapers/playstation-buttons.png" download>PNG</a>
-        </div>
-      </article>
-
-      <!-- Copy the card above to add more wallpapers. -->
+    <section id="gallery" class="gallery" aria-label="Wallpaper gallery">
+      <p class="gallery-status">Loading wallpapers…</p>
     </section>
 
     <section id="license" class="info">
@@ -80,5 +65,38 @@
     <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">CC BY-NC-ND 4.0</a>
     <a href="https://github.com/naetomgite/Idea0123-MiniWalls">GitHub</a>
   </footer>
+
+  <script>
+    const gallery = document.querySelector('.gallery');
+
+    const escapeHtml = (value) => value.replace(/[&<>'"]/g, (character) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+    }[character]));
+
+    fetch('gallery.json')
+      .then((response) => {
+        if (!response.ok) throw new Error('Could not load the gallery');
+        return response.json();
+      })
+      .then((wallpapers) => {
+        gallery.innerHTML = wallpapers.map(({ name, path, type }) => {
+          const safeName = escapeHtml(name);
+          const safePath = encodeURI(path);
+          return `
+            <article class="card">
+              <a class="preview" href="${safePath}">
+                <img src="${safePath}" alt="${safeName} minimalist wallpaper" loading="lazy">
+              </a>
+              <div class="meta">
+                <h2>${safeName}</h2>
+                <a class="download" href="${safePath}" download>${type}</a>
+              </div>
+            </article>`;
+        }).join('');
+      })
+      .catch(() => {
+        gallery.innerHTML = '<p class="gallery-status">Wallpapers are unavailable right now. Please try again soon.</p>';
+      });
+  </script>
 </body>
 </html>
