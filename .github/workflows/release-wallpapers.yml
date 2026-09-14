@@ -1,0 +1,29 @@
+name: Release wallpaper collection
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Archive and release wallpapers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Create wallpaper archive
+        run: zip -r MiniWalls-wallpapers.zip docs/wallpapers
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: wallpapers-${{ github.run_number }}
+        run: >-
+          gh release create "$RELEASE_TAG" MiniWalls-wallpapers.zip
+          --target "$GITHUB_SHA"
+          --title "Wallpaper collection #${{ github.run_number }}"
+          --generate-notes
