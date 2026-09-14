@@ -137,10 +137,9 @@
         const centerActiveThumbnail = () => {
           const activeThumbnail = lightboxThumbnails.querySelector('.is-active');
           if (!activeThumbnail) return;
-          lightboxThumbnails.style.paddingBlock = '0px';
-          const emptySpace = Math.max(0, (lightboxThumbnails.clientHeight - activeThumbnail.clientHeight) / 2);
+          const emptySpace = Math.ceil(lightboxThumbnails.clientHeight / 2);
           lightboxThumbnails.style.paddingBlock = `${emptySpace}px`;
-          const target = activeThumbnail.offsetTop - emptySpace;
+          const target = activeThumbnail.offsetTop - (lightboxThumbnails.clientHeight - activeThumbnail.clientHeight) / 2;
           lightboxThumbnails.scrollTo({ top: target, behavior: 'smooth' });
           updateScrollIndicator();
         };
@@ -153,15 +152,21 @@
           lightboxImage.alt = `${wallpaper.name} minimalist wallpaper`;
           lightboxTitle.textContent = wallpaper.name;
           lightboxDownload.href = safePath;
-          lightboxThumbnails.innerHTML = wallpapers.map(({ name, path }, thumbnailIndex) => `
-            <button class="lightbox-thumbnail${thumbnailIndex === activeWallpaper ? ' is-active' : ''}"
-                    type="button" data-lightbox-index="${thumbnailIndex}" aria-label="Show ${escapeHtml(name)}">
-              <img src="${encodeURI(path)}" alt="" loading="lazy">
-            </button>`).join('');
+          if (!lightboxThumbnails.children.length) {
+            lightboxThumbnails.innerHTML = wallpapers.map(({ name, path }, thumbnailIndex) => `
+              <button class="lightbox-thumbnail${thumbnailIndex === activeWallpaper ? ' is-active' : ''}"
+                      type="button" data-lightbox-index="${thumbnailIndex}" aria-label="Show ${escapeHtml(name)}">
+                <img src="${encodeURI(path)}" alt="" loading="lazy">
+              </button>`).join('');
+            lightboxThumbnails.querySelectorAll('img').forEach((image) => {
+              image.addEventListener('load', updateScrollIndicator, { once: true });
+            });
+          } else {
+            lightboxThumbnails.querySelectorAll('.lightbox-thumbnail').forEach((thumbnail, thumbnailIndex) => {
+              thumbnail.classList.toggle('is-active', thumbnailIndex === activeWallpaper);
+            });
+          }
           requestAnimationFrame(centerActiveThumbnail);
-          lightboxThumbnails.querySelectorAll('img').forEach((image) => {
-            image.addEventListener('load', centerActiveThumbnail, { once: true });
-          });
         };
 
         const openLightbox = (index) => {
