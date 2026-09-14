@@ -19,7 +19,7 @@
 
         <div class="credit-option">
           <p class="credit-option-label">Short credit</p>
-          <p class="credit-option-text" id="credit-option-short">MiniWalls artwork by @naetomgite — naetomgite.github.io/Idea0123-MiniWalls/</p>
+          <p class="credit-option-text" id="credit-option-short">naetomgite.github.io/Idea0123-MiniWalls by @naetomgite</p>
           <button class="credit-option-copy" type="button" data-copy-target="credit-option-short">Copy</button>
         </div>
 
