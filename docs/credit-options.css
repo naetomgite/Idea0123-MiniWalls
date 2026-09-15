@@ -94,7 +94,7 @@
 
 .hero-copy h1 span:last-child {
   font-size: .65em;
-  letter-spacing: -.154em;
+  letter-spacing: normal;
 }
 
 .hero-copy h1::after {
