@@ -92,6 +92,10 @@
 .credit-option-copy:active { background: #b8b8b8; }
 .credit-option-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
+.hero-copy h1 span:last-child {
+  font-size: .65em;
+}
+
 .hero-copy h1::after {
   display: block;
   width: 171px;
