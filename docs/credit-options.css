@@ -150,6 +150,8 @@
 
 @media (max-width: 600px) {
   .hero-copy h1::after {
+    width: 120px;
+    height: 36px;
     margin-inline: auto;
   }
 }
