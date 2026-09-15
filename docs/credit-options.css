@@ -91,3 +91,50 @@
 .credit-option-copy:hover { background: #d8d8d8; }
 .credit-option-copy:active { background: #b8b8b8; }
 .credit-option-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+@media (max-width: 700px) {
+  body .download-dialog .download-dialog-panel {
+    left: 12px;
+    width: calc(100% - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 10px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    transform: translateY(-50%);
+  }
+
+  body .download-dialog .download-dialog-toolbar {
+    padding-bottom: 10px;
+  }
+
+  body .download-dialog .download-dialog-grid {
+    gap: 8px;
+  }
+
+  body .download-dialog .download-dialog-section {
+    padding: 14px;
+  }
+
+  body .download-dialog .download-dialog-section p {
+    margin-top: 10px;
+  }
+
+  body .download-dialog .download-dialog-download-block {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  body .download-dialog .download-dialog-preview,
+  body .download-dialog .download-dialog-download-heading,
+  body .download-dialog .download-dialog-item-name,
+  body .download-dialog .download-dialog-description {
+    display: none !important;
+  }
+
+  body .download-dialog .download-dialog-download {
+    margin-top: 0;
+  }
+}

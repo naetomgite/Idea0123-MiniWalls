@@ -56,6 +56,31 @@
   const lightbox = document.querySelector('.lightbox');
   const downloadDialog = document.querySelector('.download-dialog');
   const minimumCreditMoreLink = document.querySelector('.minimum-credit-more-link');
+  const downloadDialogItemName = document.querySelector('.download-dialog-item-name');
+  const downloadDialogDownloadLabel = document.querySelector('.download-dialog-download span');
+  const mobileDownloadDialog = window.matchMedia('(max-width: 700px)');
+
+  const syncDownloadButtonLabel = () => {
+    if (!downloadDialogDownloadLabel || !downloadDialogItemName) return;
+
+    const hasWallpaper = !downloadDialogItemName.hidden && downloadDialogItemName.textContent.trim();
+    if (mobileDownloadDialog.matches) {
+      downloadDialogDownloadLabel.textContent = hasWallpaper
+        ? `${downloadDialogItemName.textContent.trim()} • Download`
+        : 'Download';
+      return;
+    }
+
+    downloadDialogDownloadLabel.textContent = hasWallpaper ? 'Download image' : 'Download';
+  };
+
+  if (downloadDialog) {
+    const dialogObserver = new MutationObserver(() => {
+      if (downloadDialog.open) syncDownloadButtonLabel();
+    });
+    dialogObserver.observe(downloadDialog, { attributes: true, attributeFilter: ['open'] });
+    mobileDownloadDialog.addEventListener('change', syncDownloadButtonLabel);
+  }
 
   const copyText = async (text) => {
     if (navigator.clipboard && window.isSecureContext) {
