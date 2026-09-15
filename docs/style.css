@@ -198,7 +198,7 @@ h1 span {
   z-index: 0;
   width: 100%;
   height: 100%;
-  background: var(--text);
+  background: #8a8a8a;
   content: "";
   transform: translate(5px, 5px);
 }
