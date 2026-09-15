@@ -92,6 +92,15 @@
 .credit-option-copy:active { background: #b8b8b8; }
 .credit-option-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
+.hero-copy h1::after {
+  display: block;
+  width: 171px;
+  height: 51px;
+  margin-top: 20px;
+  background: url("assets/idea0123-h-icon.svg") left center / contain no-repeat;
+  content: "";
+}
+
 @media (max-width: 700px) {
   body .download-dialog .download-dialog-panel {
     left: 12px;
@@ -136,5 +145,13 @@
 
   body .download-dialog .download-dialog-download {
     margin-top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-copy h1::after {
+    width: 120px;
+    height: 36px;
+    margin-inline: auto;
   }
 }
