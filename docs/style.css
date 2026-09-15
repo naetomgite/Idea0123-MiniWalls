@@ -210,7 +210,6 @@ h1 span {
   width: 100%;
   height: auto;
   display: block;
-  border: 2px solid var(--line);
   transform: translate(0, 0);
   transition: transform .12s ease;
 }
