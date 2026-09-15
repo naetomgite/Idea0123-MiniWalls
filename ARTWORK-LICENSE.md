@@ -23,6 +23,15 @@ appropriate attribution is given.
 
 ## Attribution
 
+### Project naming
+
+This project has two official names: **Idea0123: MiniWalls** (full name) and
+**Idea0123** (short name).
+
+For attribution, **Idea0123-MiniWalls** and **Idea0123_MiniWalls** are also
+accepted naming variants. Any of these four forms may be used to identify the
+project in an attribution.
+
 Recommended plain-text attribution:
 
 > Artwork by naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/
