@@ -20,21 +20,43 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the site
+      - name: Check out production site
         uses: actions/checkout@v4
+        with:
+          ref: main
+          path: production
+
+      - name: Check out development site
+        uses: actions/checkout@v4
+        with:
+          ref: dev-pages
+          path: development
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: Generate gallery
+      - name: Generate production gallery
+        working-directory: production
         run: node scripts/build-gallery.mjs
+
+      - name: Generate development gallery
+        working-directory: development
+        run: node scripts/build-gallery.mjs
+
+      - name: Assemble Pages site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p site/dev
+          cp -a production/docs/. site/
+          cp -a development/docs/. site/dev/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: site
 
       - name: Deploy to GitHub Pages
         id: deployment
