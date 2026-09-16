@@ -24,6 +24,12 @@
       <div class="credit-options-content">
         <p class="credit-options-intro">Use whichever format fits where you are sharing the artwork. Linking back to the MiniWalls page is preferred whenever the platform allows it.</p>
 
+        <div class="credit-option credit-option-card">
+          <p class="credit-option-label">Credit card</p>
+          <img class="credit-option-card-preview" src="assets/idea0123-v-card-2160x2160.png" alt="Idea0123: MiniWalls credit card" loading="lazy">
+          <a class="credit-option-download" href="assets/idea0123-v-card-2160x2160.png" download>Download card</a>
+        </div>
+
         <div class="credit-option">
           <p class="credit-option-label">Full credit</p>
           <p class="credit-option-text" id="credit-option-full">Artwork by naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
