@@ -71,7 +71,17 @@
   overflow-wrap: anywhere;
 }
 
-.credit-option-copy {
+.credit-option-card-preview {
+  display: block;
+  width: min(100%, 420px);
+  height: auto;
+  border: 2px solid var(--line);
+  background: var(--ink);
+}
+
+.credit-option-copy,
+.credit-option-download {
+  display: block;
   width: 100%;
   margin: 0;
   padding: 10px 16px;
@@ -84,13 +94,22 @@
   font-size: .78rem;
   font-weight: 800;
   letter-spacing: .04em;
+  text-align: center;
+  text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
 }
 
-.credit-option-copy:hover { background: #d8d8d8; }
-.credit-option-copy:active { background: #b8b8b8; }
-.credit-option-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.credit-option-card .credit-option-download {
+  width: min(100%, 420px);
+}
+
+.credit-option-copy:hover,
+.credit-option-download:hover { background: #d8d8d8; }
+.credit-option-copy:active,
+.credit-option-download:active { background: #b8b8b8; }
+.credit-option-copy:focus-visible,
+.credit-option-download:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
 .hero-copy h1 span:last-child {
   font-size: .65em;
