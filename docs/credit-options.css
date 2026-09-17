@@ -4,6 +4,29 @@
   text-align: center;
 }
 
+.suggested-credit-more {
+  display: block;
+  width: min(100%, 760px);
+  margin-top: 10px;
+  padding: 10px 16px;
+  border: 2px solid var(--line);
+  border-radius: 0;
+  background: var(--text);
+  color: var(--ink);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.suggested-credit-more:hover { background: #d8d8d8; }
+.suggested-credit-more:active { background: #b8b8b8; }
+.suggested-credit-more:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
 .credit-options-section {
   padding: 0;
   scroll-margin-top: 24px;
