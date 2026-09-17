@@ -30,16 +30,18 @@
       <div class="credit-options-content">
         <p class="credit-options-intro">Use whichever format fits where you are sharing the artwork. Linking back to the MiniWalls page is preferred whenever the platform allows it.</p>
 
-        <div class="credit-option credit-option-card">
-          <p class="credit-option-label">Credit card</p>
-          <img class="credit-option-card-preview" src="assets/idea0123-v-card-2160x2160.png" alt="Idea0123: MiniWalls credit card" loading="lazy">
-          <a class="credit-option-download" href="assets/idea0123-v-card-2160x2160.png" download>Download card</a>
-        </div>
+        <div class="credit-card-row">
+          <div class="credit-option credit-option-card">
+            <p class="credit-option-label">Credit card</p>
+            <img class="credit-option-card-preview" src="assets/idea0123-v-card-2160x2160.png" alt="Idea0123: MiniWalls credit card" loading="lazy">
+            <a class="credit-option-download" href="assets/idea0123-v-card-2160x2160.png" download>Download card</a>
+          </div>
 
-        <div class="credit-option credit-option-card">
-          <p class="credit-option-label">1080p banner</p>
-          <img class="credit-option-card-preview" src="assets/idea0123-h-card-1920x1080.png" alt="Idea0123: MiniWalls 1080p credit banner" loading="lazy">
-          <a class="credit-option-download" href="assets/idea0123-h-card-1920x1080.png" download>Download banner</a>
+          <div class="credit-option credit-option-card">
+            <p class="credit-option-label">1080p banner</p>
+            <img class="credit-option-card-preview" src="assets/idea0123-h-card-1920x1080.png" alt="Idea0123: MiniWalls 1080p credit banner" loading="lazy">
+            <a class="credit-option-download" href="assets/idea0123-h-card-1920x1080.png" download>Download banner</a>
+          </div>
         </div>
 
         <div class="credit-option">
