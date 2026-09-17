@@ -10,10 +10,16 @@
     projectNamingNote.innerHTML = `<strong>Project naming:</strong> this project has two official names: “Idea0123: MiniWalls” (full name) and “Idea0123” (short name). For attribution, “Idea0123-MiniWalls” and “Idea0123_MiniWalls” are also accepted naming variants. Any of these four forms may be used to identify the project in an attribution.`;
     creditStack.insertAdjacentElement('beforebegin', projectNamingNote);
 
+    const suggestedCreditMore = document.createElement('a');
+    suggestedCreditMore.className = 'suggested-credit-more';
+    suggestedCreditMore.href = '#credit-options';
+    suggestedCreditMore.textContent = 'More ways to credit';
+    creditStack.insertAdjacentElement('afterend', suggestedCreditMore);
+
     const minimumCreditNote = document.createElement('p');
     minimumCreditNote.className = 'minimum-credit-note';
     minimumCreditNote.innerHTML = `<strong>Recommended minimum attribution:</strong> for a simple and reliable attribution, include (1) a link shown as “naetomgite.github.io/Idea0123-MiniWalls” or “https://naetomgite.github.io/Idea0123-MiniWalls/”, or a QR code pointing to it; (2) the project name using any accepted form: “Idea0123: MiniWalls”, “Idea0123”, “Idea0123-MiniWalls”, or “Idea0123_MiniWalls”; and (3) an author reference as “github.com/naetomgite”, “GitHub: naetomgite”, “By naetomgite (GitHub)”, “https://naetomgite.github.io/Idea0123-MiniWalls/”, or “naetomgite” accompanied by the GitHub logo. To make sure your attribution is correct, you can visit the <a class="minimum-credit-more-link" href="#credit-options">More ways to credit</a> section.`;
-    creditStack.insertAdjacentElement('afterend', minimumCreditNote);
+    suggestedCreditMore.insertAdjacentElement('afterend', minimumCreditNote);
   }
 
   const section = document.createElement('section');
@@ -72,6 +78,7 @@
   const creditOptions = section.querySelector('#credit-options');
   const lightbox = document.querySelector('.lightbox');
   const downloadDialog = document.querySelector('.download-dialog');
+  const suggestedCreditMore = document.querySelector('.suggested-credit-more');
   const minimumCreditMoreLink = document.querySelector('.minimum-credit-more-link');
   const downloadDialogItemName = document.querySelector('.download-dialog-item-name');
   const downloadDialogDownloadLabel = document.querySelector('.download-dialog-download span');
@@ -140,6 +147,11 @@
   };
 
   moreCreditLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    openCreditOptions();
+  });
+
+  suggestedCreditMore?.addEventListener('click', (event) => {
     event.preventDefault();
     openCreditOptions();
   });
