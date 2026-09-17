@@ -10,10 +10,16 @@
     projectNamingNote.innerHTML = `<strong>Project naming:</strong> this project has two official names: “Idea0123: MiniWalls” (full name) and “Idea0123” (short name). For attribution, “Idea0123-MiniWalls” and “Idea0123_MiniWalls” are also accepted naming variants. Any of these four forms may be used to identify the project in an attribution.`;
     creditStack.insertAdjacentElement('beforebegin', projectNamingNote);
 
+    const suggestedCreditMore = document.createElement('a');
+    suggestedCreditMore.className = 'suggested-credit-more';
+    suggestedCreditMore.href = '#credit-options';
+    suggestedCreditMore.textContent = 'More ways to credit';
+    creditStack.insertAdjacentElement('afterend', suggestedCreditMore);
+
     const minimumCreditNote = document.createElement('p');
     minimumCreditNote.className = 'minimum-credit-note';
     minimumCreditNote.innerHTML = `<strong>Recommended minimum attribution:</strong> for a simple and reliable attribution, include (1) a link shown as “naetomgite.github.io/Idea0123-MiniWalls” or “https://naetomgite.github.io/Idea0123-MiniWalls/”, or a QR code pointing to it; (2) the project name using any accepted form: “Idea0123: MiniWalls”, “Idea0123”, “Idea0123-MiniWalls”, or “Idea0123_MiniWalls”; and (3) an author reference as “github.com/naetomgite”, “GitHub: naetomgite”, “By naetomgite (GitHub)”, “https://naetomgite.github.io/Idea0123-MiniWalls/”, or “naetomgite” accompanied by the GitHub logo. To make sure your attribution is correct, you can visit the <a class="minimum-credit-more-link" href="#credit-options">More ways to credit</a> section.`;
-    creditStack.insertAdjacentElement('afterend', minimumCreditNote);
+    suggestedCreditMore.insertAdjacentElement('afterend', minimumCreditNote);
   }
 
   const section = document.createElement('section');
@@ -23,6 +29,20 @@
       <summary>More ways to credit</summary>
       <div class="credit-options-content">
         <p class="credit-options-intro">Use whichever format fits where you are sharing the artwork. Linking back to the MiniWalls page is preferred whenever the platform allows it.</p>
+
+        <div class="credit-card-row">
+          <div class="credit-option credit-option-card">
+            <p class="credit-option-label">Credit card</p>
+            <img class="credit-option-card-preview" src="assets/idea0123-v-card-2160x2160.png" alt="Idea0123: MiniWalls credit card" loading="lazy">
+            <a class="credit-option-download" href="assets/idea0123-v-card-2160x2160.png" download>Download card</a>
+          </div>
+
+          <div class="credit-option credit-option-card">
+            <p class="credit-option-label">1080p banner</p>
+            <img class="credit-option-card-preview" src="assets/idea0123-h-card-1920x1080.png" alt="Idea0123: MiniWalls 1080p credit banner" loading="lazy">
+            <a class="credit-option-download" href="assets/idea0123-h-card-1920x1080.png" download>Download banner</a>
+          </div>
+        </div>
 
         <div class="credit-option">
           <p class="credit-option-label">Full credit</p>
@@ -60,6 +80,7 @@
   const creditOptions = section.querySelector('#credit-options');
   const lightbox = document.querySelector('.lightbox');
   const downloadDialog = document.querySelector('.download-dialog');
+  const suggestedCreditMore = document.querySelector('.suggested-credit-more');
   const minimumCreditMoreLink = document.querySelector('.minimum-credit-more-link');
   const downloadDialogItemName = document.querySelector('.download-dialog-item-name');
   const downloadDialogDownloadLabel = document.querySelector('.download-dialog-download span');
@@ -128,6 +149,11 @@
   };
 
   moreCreditLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    openCreditOptions();
+  });
+
+  suggestedCreditMore?.addEventListener('click', (event) => {
     event.preventDefault();
     openCreditOptions();
   });

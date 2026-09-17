@@ -4,6 +4,29 @@
   text-align: center;
 }
 
+.suggested-credit-more {
+  display: block;
+  width: min(100%, 760px);
+  margin-top: 10px;
+  padding: 10px 16px;
+  border: 2px solid var(--line);
+  border-radius: 0;
+  background: var(--text);
+  color: var(--ink);
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.suggested-credit-more:hover { background: #d8d8d8; }
+.suggested-credit-more:active { background: #b8b8b8; }
+.suggested-credit-more:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
 .credit-options-section {
   padding: 0;
   scroll-margin-top: 24px;
@@ -53,6 +76,14 @@
   margin-top: 18px;
 }
 
+.credit-card-row {
+  width: 100%;
+}
+
+.credit-card-row .credit-option {
+  width: 100%;
+}
+
 .credit-option-label {
   margin: 0 0 8px;
   color: var(--muted);
@@ -71,7 +102,17 @@
   overflow-wrap: anywhere;
 }
 
-.credit-option-copy {
+.credit-option-card-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid var(--line);
+  background: var(--ink);
+}
+
+.credit-option-copy,
+.credit-option-download {
+  display: block;
   width: 100%;
   margin: 0;
   padding: 10px 16px;
@@ -84,13 +125,22 @@
   font-size: .78rem;
   font-weight: 800;
   letter-spacing: .04em;
+  text-align: center;
+  text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
 }
 
-.credit-option-copy:hover { background: #d8d8d8; }
-.credit-option-copy:active { background: #b8b8b8; }
-.credit-option-copy:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.credit-option-card .credit-option-download {
+  width: 100%;
+}
+
+.credit-option-copy:hover,
+.credit-option-download:hover { background: #d8d8d8; }
+.credit-option-copy:active,
+.credit-option-download:active { background: #b8b8b8; }
+.credit-option-copy:focus-visible,
+.credit-option-download:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
 .hero-copy h1 span:last-child {
   font-size: .65em;
@@ -104,6 +154,40 @@
   margin-top: 20px;
   background: url("assets/idea0123-h-icon.svg") left center / contain no-repeat;
   content: "";
+}
+
+@media (min-width: 900px) {
+  .credit-options-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  .credit-options-intro {
+    grid-column: 1 / -1;
+  }
+
+  .credit-card-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 9fr) minmax(0, 16fr);
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  .credit-card-row .credit-option {
+    width: 100%;
+  }
+
+  .credit-card-row .credit-option-card-preview {
+    width: 100%;
+    height: auto;
+  }
+
+  .credit-option {
+    width: 100%;
+  }
 }
 
 @media (max-width: 700px) {
