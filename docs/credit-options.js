@@ -30,6 +30,12 @@
           <a class="credit-option-download" href="assets/idea0123-v-card-2160x2160.png" download>Download card</a>
         </div>
 
+        <div class="credit-option credit-option-card">
+          <p class="credit-option-label">1080p banner</p>
+          <img class="credit-option-card-preview" src="assets/idea0123-h-card-1920x1080.png" alt="Idea0123: MiniWalls 1080p credit banner" loading="lazy">
+          <a class="credit-option-download" href="assets/idea0123-h-card-1920x1080.png" download>Download banner</a>
+        </div>
+
         <div class="credit-option">
           <p class="credit-option-label">Full credit</p>
           <p class="credit-option-text" id="credit-option-full">Artwork by naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/</p>
