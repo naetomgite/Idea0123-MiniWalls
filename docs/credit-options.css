@@ -182,9 +182,7 @@
 
   .credit-card-row .credit-option-card-preview {
     width: 100%;
-    height: clamp(220px, 26vw, 420px);
-    box-sizing: border-box;
-    object-fit: contain;
+    height: auto;
   }
 
   .credit-option {
