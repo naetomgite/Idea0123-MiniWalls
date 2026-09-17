@@ -96,7 +96,7 @@
 
 .credit-option-card-preview {
   display: block;
-  width: min(100%, 420px);
+  width: 100%;
   height: auto;
   border: 2px solid var(--line);
   background: var(--ink);
@@ -124,7 +124,7 @@
 }
 
 .credit-option-card .credit-option-download {
-  width: min(100%, 420px);
+  width: 100%;
 }
 
 .credit-option-copy:hover,
@@ -162,6 +162,11 @@
 
   .credit-option {
     width: 100%;
+  }
+
+  .credit-option-card:has(.credit-option-card-preview[src*="idea0123-v-card"]) .credit-option-card-preview,
+  .credit-option-card:has(.credit-option-card-preview[src*="idea0123-v-card"]) .credit-option-download {
+    width: 66.6667%;
   }
 }
 
