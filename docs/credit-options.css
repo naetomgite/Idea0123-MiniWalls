@@ -171,7 +171,7 @@
   .credit-card-row {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: minmax(0, 9fr) minmax(0, 16fr);
+    grid-template-columns: minmax(0, 9fr) minmax(0, 20fr);
     column-gap: 24px;
     align-items: start;
   }
