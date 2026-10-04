@@ -26,23 +26,7 @@ You may:
 
 ### Attribution
 
-When redistributing the artwork, please give appropriate attribution.
-
-Plain text:
-
-> Artwork by naetomgite — https://naetomgite.github.io/Idea0123-MiniWalls/
-
-Markdown:
-
-```md
-[Idea0123 by naetomgite](https://naetomgite.github.io/Idea0123-MiniWalls/)
-```
-
-Markdown with license:
-
-```md
-[Idea0123: MiniWalls © 2026 naetomgite · CC BY-NC-ND 4.0](https://naetomgite.github.io/Idea0123-MiniWalls/)
-```
+https://naetomgite.github.io/Idea0123-MiniWalls/
 
 Commercial redistribution and distribution of modified versions are not
 permitted under this license.
