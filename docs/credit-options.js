@@ -37,9 +37,9 @@
 
         <div class="credit-card-row">
           <div class="credit-option credit-option-card">
-            <p class="credit-option-label">Credit card</p>
-            <img class="credit-option-card-preview" src="assets/idea0123-v-card-2160x2160.png" alt="Idea0123: MiniWalls credit card" loading="lazy">
-            <a class="credit-option-download" href="assets/idea0123-v-card-2160x2160.png" download>Download card</a>
+            <p class="credit-option-label">Promo card</p>
+            <img class="credit-option-card-preview" src="assets/idea0123-v-card-1080x1350.png" alt="Idea0123: MiniWalls 1080 × 1350 promo card" loading="lazy">
+            <a class="credit-option-download" href="assets/idea0123-v-card-1080x1350.png" download>Download card</a>
           </div>
 
           <div class="credit-option credit-option-card">
