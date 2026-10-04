@@ -5,6 +5,11 @@
 
   const creditStack = document.querySelector('#license .credit-stack');
   if (creditStack) {
+    const logoLicenseNote = document.createElement('p');
+    logoLicenseNote.className = 'logo-license-note';
+    logoLicenseNote.innerHTML = `<strong>Idea0123 logo:</strong> The Idea0123 logo is © 2026 naetomgite and is licensed under CC BY-NC-ND 4.0. When the logo is used as part of an attribution that already satisfies the attribution requirements for Idea0123: MiniWalls artwork, no additional or separate credit for the logo is required.`;
+    creditStack.insertAdjacentElement('beforebegin', logoLicenseNote);
+
     const projectNamingNote = document.createElement('p');
     projectNamingNote.className = 'project-naming-note';
     projectNamingNote.innerHTML = `<strong>Project naming:</strong> this project has two official names: “Idea0123: MiniWalls” (full name) and “Idea0123” (short name). For attribution, “Idea0123-MiniWalls” and “Idea0123_MiniWalls” are also accepted naming variants. Any of these four forms may be used to identify the project in an attribution.`;
