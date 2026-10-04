@@ -26,7 +26,7 @@ You may:
 
 ### Attribution
 
-https://naetomgite.github.io/Idea0123-MiniWalls/
+https://naetomgite.github.io/Idea0123-MiniWalls/#license
 
 Commercial redistribution and distribution of modified versions are not
 permitted under this license.
