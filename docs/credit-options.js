@@ -86,6 +86,96 @@
   const downloadDialogDownloadLabel = document.querySelector('.download-dialog-download span');
   const mobileDownloadDialog = window.matchMedia('(max-width: 700px)');
 
+  const initialHash = window.location.hash;
+  const gallerySection = document.querySelector('#gallery');
+  const getInitialHashTarget = () => {
+    if (!initialHash || initialHash.length < 2) return null;
+    try {
+      return document.getElementById(decodeURIComponent(initialHash.slice(1)));
+    } catch {
+      return null;
+    }
+  };
+
+  const stabilizeInitialHashScroll = () => {
+    const target = getInitialHashTarget();
+    if (!target || !gallerySection) return;
+
+    const targetIsAfterGallery = Boolean(
+      gallerySection.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING
+    );
+    if (!targetIsAfterGallery) return;
+
+    let active = true;
+    let settleTimer = 0;
+    const watchedImages = new WeakSet();
+
+    const realign = () => {
+      if (!active) return;
+      requestAnimationFrame(() => {
+        if (active) target.scrollIntoView({ block: 'start' });
+      });
+    };
+
+    const stop = () => {
+      if (!active) return;
+      active = false;
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+      window.clearTimeout(settleTimer);
+      window.clearTimeout(maxTimer);
+    };
+
+    const maybeFinish = () => {
+      if (!active) return;
+      const images = [...gallerySection.querySelectorAll('img')];
+      if (!images.length || images.some((image) => !image.complete)) return;
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => {
+        realign();
+        window.setTimeout(stop, 120);
+      }, 500);
+    };
+
+    const watchGalleryImages = () => {
+      gallerySection.querySelectorAll('img').forEach((image) => {
+        image.loading = 'eager';
+        if (watchedImages.has(image)) return;
+        watchedImages.add(image);
+        if (!image.complete) {
+          image.addEventListener('load', () => {
+            realign();
+            maybeFinish();
+          }, { once: true });
+          image.addEventListener('error', () => {
+            realign();
+            maybeFinish();
+          }, { once: true });
+        }
+      });
+      realign();
+      maybeFinish();
+    };
+
+    const resizeObserver = new ResizeObserver(() => realign());
+    const mutationObserver = new MutationObserver(watchGalleryImages);
+    resizeObserver.observe(gallerySection);
+    mutationObserver.observe(gallerySection, { childList: true, subtree: true });
+
+    const maxTimer = window.setTimeout(stop, 15000);
+    window.addEventListener('load', realign, { once: true });
+    document.fonts?.ready.then(realign);
+
+    window.addEventListener('wheel', stop, { once: true, passive: true });
+    window.addEventListener('touchstart', stop, { once: true, passive: true });
+    window.addEventListener('pointerdown', stop, { once: true, passive: true });
+    document.addEventListener('keydown', stop, { once: true });
+
+    watchGalleryImages();
+  };
+
+  stabilizeInitialHashScroll();
+
   const syncDownloadButtonLabel = () => {
     if (!downloadDialogDownloadLabel || !downloadDialogItemName) return;
 
