@@ -23,6 +23,13 @@ appropriate attribution is given.
 
 ## Attribution
 
+### Idea0123 logo
+
+The Idea0123 logo is © 2026 naetomgite and is licensed under CC BY-NC-ND 4.0.
+When the logo is used as part of an attribution that already satisfies the
+attribution requirements for Idea0123: MiniWalls artwork, no additional or
+separate credit for the logo is required.
+
 ### Project naming
 
 This project has two official names: **Idea0123: MiniWalls** (full name) and

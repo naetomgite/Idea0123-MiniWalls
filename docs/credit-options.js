@@ -5,6 +5,11 @@
 
   const creditStack = document.querySelector('#license .credit-stack');
   if (creditStack) {
+    const logoLicenseNote = document.createElement('p');
+    logoLicenseNote.className = 'logo-license-note';
+    logoLicenseNote.innerHTML = `<strong>Idea0123 logo:</strong> The Idea0123 logo is © 2026 naetomgite and is licensed under CC BY-NC-ND 4.0. When the logo is used as part of an attribution that already satisfies the attribution requirements for Idea0123: MiniWalls artwork, no additional or separate credit for the logo is required.`;
+    creditStack.insertAdjacentElement('beforebegin', logoLicenseNote);
+
     const projectNamingNote = document.createElement('p');
     projectNamingNote.className = 'project-naming-note';
     projectNamingNote.innerHTML = `<strong>Project naming:</strong> this project has two official names: “Idea0123: MiniWalls” (full name) and “Idea0123” (short name). For attribution, “Idea0123-MiniWalls” and “Idea0123_MiniWalls” are also accepted naming variants. Any of these four forms may be used to identify the project in an attribution.`;
@@ -32,9 +37,9 @@
 
         <div class="credit-card-row">
           <div class="credit-option credit-option-card">
-            <p class="credit-option-label">Credit card</p>
-            <img class="credit-option-card-preview" src="assets/idea0123-v-card-2160x2160.png" alt="Idea0123: MiniWalls credit card" loading="lazy">
-            <a class="credit-option-download" href="assets/idea0123-v-card-2160x2160.png" download>Download card</a>
+            <p class="credit-option-label">Promo card</p>
+            <img class="credit-option-card-preview" src="assets/idea0123-v-card-1080x1350.png" alt="Idea0123: MiniWalls 1080 × 1350 promo card" loading="lazy">
+            <a class="credit-option-download" href="assets/idea0123-v-card-1080x1350.png" download>Download card</a>
           </div>
 
           <div class="credit-option credit-option-card">
@@ -85,6 +90,96 @@
   const downloadDialogItemName = document.querySelector('.download-dialog-item-name');
   const downloadDialogDownloadLabel = document.querySelector('.download-dialog-download span');
   const mobileDownloadDialog = window.matchMedia('(max-width: 700px)');
+
+  const initialHash = window.location.hash;
+  const gallerySection = document.querySelector('#gallery');
+  const getInitialHashTarget = () => {
+    if (!initialHash || initialHash.length < 2) return null;
+    try {
+      return document.getElementById(decodeURIComponent(initialHash.slice(1)));
+    } catch {
+      return null;
+    }
+  };
+
+  const stabilizeInitialHashScroll = () => {
+    const target = getInitialHashTarget();
+    if (!target || !gallerySection) return;
+
+    const targetIsAfterGallery = Boolean(
+      gallerySection.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING
+    );
+    if (!targetIsAfterGallery) return;
+
+    let active = true;
+    let settleTimer = 0;
+    const watchedImages = new WeakSet();
+
+    const realign = () => {
+      if (!active) return;
+      requestAnimationFrame(() => {
+        if (active) target.scrollIntoView({ block: 'start' });
+      });
+    };
+
+    const stop = () => {
+      if (!active) return;
+      active = false;
+      resizeObserver.disconnect();
+      mutationObserver.disconnect();
+      window.clearTimeout(settleTimer);
+      window.clearTimeout(maxTimer);
+    };
+
+    const maybeFinish = () => {
+      if (!active) return;
+      const images = [...gallerySection.querySelectorAll('img')];
+      if (!images.length || images.some((image) => !image.complete)) return;
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => {
+        realign();
+        window.setTimeout(stop, 120);
+      }, 500);
+    };
+
+    const watchGalleryImages = () => {
+      gallerySection.querySelectorAll('img').forEach((image) => {
+        image.loading = 'eager';
+        if (watchedImages.has(image)) return;
+        watchedImages.add(image);
+        if (!image.complete) {
+          image.addEventListener('load', () => {
+            realign();
+            maybeFinish();
+          }, { once: true });
+          image.addEventListener('error', () => {
+            realign();
+            maybeFinish();
+          }, { once: true });
+        }
+      });
+      realign();
+      maybeFinish();
+    };
+
+    const resizeObserver = new ResizeObserver(() => realign());
+    const mutationObserver = new MutationObserver(watchGalleryImages);
+    resizeObserver.observe(gallerySection);
+    mutationObserver.observe(gallerySection, { childList: true, subtree: true });
+
+    const maxTimer = window.setTimeout(stop, 15000);
+    window.addEventListener('load', realign, { once: true });
+    document.fonts?.ready.then(realign);
+
+    window.addEventListener('wheel', stop, { once: true, passive: true });
+    window.addEventListener('touchstart', stop, { once: true, passive: true });
+    window.addEventListener('pointerdown', stop, { once: true, passive: true });
+    document.addEventListener('keydown', stop, { once: true });
+
+    watchGalleryImages();
+  };
+
+  stabilizeInitialHashScroll();
 
   const syncDownloadButtonLabel = () => {
     if (!downloadDialogDownloadLabel || !downloadDialogItemName) return;
